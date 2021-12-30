@@ -12,8 +12,7 @@ const config = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.min.js',
-        assetModuleFilename: 'dist/images/[hash][ext]'
+        filename: 'app.min.js'
     },
     devServer: {
         open: true,
@@ -48,10 +47,7 @@ const config = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'static/[hash][ext]'
-                }
+                type: 'asset/resource'
             },
 
             // Add your rules for custom modules here
@@ -59,7 +55,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.jpg'],
     },
 };
 
