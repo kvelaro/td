@@ -2,11 +2,11 @@ import Game from "./Game";
 import Collision from "./Collision";
 import Pixel from "./Pixel";
 import Cell from "./Cell";
-import Corporal from "./Corporal";
-import Soldier from "./Soldier";
-import Sergeant from "./Sergeant";
-import Ensign from "./Ensign";
-import Lieutenant from "./Lieutenant";
+import Corporal from "./Soldiers/Corporal";
+import Soldier from "./Soldiers/Soldier";
+import Sergeant from "./Soldiers/Sergeant";
+import Ensign from "./Soldiers/Ensign";
+import Lieutenant from "./Soldiers/Lieutenant";
 import Money from "./Money";
 
 export default class InputHandler {

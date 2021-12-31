@@ -1,17 +1,15 @@
-import GameObject from "./GameObject";
-import Game from "./Game";
-import Cell from "./Cell";
+import Game from "../Game";
+import Cell from "../Cell";
+import Bullet from "../Bullet";
 
-export default class Bullet extends GameObject {
-    private game: Game
-    protected speed: number
-    protected delete: boolean
+export default class SoldierBullet extends Bullet {
     constructor(game: Game, x: number, y: number) {
         super(x, y);
         this.game = game
-        this.width = 10
-        this.height = 10
+        this.width = 5
+        this.height = 5
         this.speed = 3
+        this.damage = 5
         this.delete = false
     }
 

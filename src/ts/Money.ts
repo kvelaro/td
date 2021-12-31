@@ -4,7 +4,7 @@ import chest from '../images/chest.png'
 
 const IMAGE_WIDTH = 1000
 const IMAGE_HEIGHT = 1000
-const INITIAL_AMOUNT = 300
+const INITIAL_AMOUNT = 3000
 
 export default class Money extends GameObject {
     private game: Game
