@@ -1,28 +1,35 @@
 import Game from "./Game";
 import Defender from "./Defender";
 import Cell from "./Cell";
+import zombieSoldier from '../images/zombie-soldier.png'
+
+const IMAGE_WIDTH = 345
+const IMAGE_HEIGHT = 486
 
 export default class Soldier extends Defender {
     private game: Game
-    private width: number
-    private height: number
+
     constructor(game: Game, x: number, y: number) {
-        super()
+        super(x, y)
         this.game = game
-        this.x = x
-        this.y = y
+        this.width = Cell.width - 2
+        this.height = Cell.height - 2
+        this.image = new Image(this.width, this.height)
+        this.image.src = zombieSoldier
         this.health = 100
         this.power = 5
-        this.width = Cell.width - 1
-        this.height = Cell.height - 1
     }
 
     draw(): void {
         let ctx = this.game.context()
-        ctx.fillStyle = '#070'
+
         ctx.font = '12px Arial'
-        ctx.fillText('Soldier', this.x, this.y + this.height / 2, this.width)
-        ctx.fillRect(this.x, this.y, this.width, this.health)
+        ctx.fillText('Soldier', this.x, this.y, this.width)
+
+        let self = this
+
+        ctx.drawImage(self.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, self.x, self.y, self.w(), self.h())
+
     }
 
     update(): void {

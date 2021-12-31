@@ -1,29 +1,27 @@
-import GameObject from "./interfaces/GameObject"
+
 import Game from "./Game"
 import grassImage from '../images/grass.jpg'
+import GameObject from "./GameObject";
 
 const CELL_WIDTH = 100
 const CELL_HEIGHT = 100
 
-export default class Cell implements GameObject {
-
+export default class Cell extends GameObject {
     private game: Game
-    private x: number
-    private y: number
     private image: HTMLImageElement
     public static width: number = CELL_WIDTH
     public static height: number = CELL_HEIGHT
     private fullyDrawn: boolean = true
-
+    public defenderExist: boolean
     constructor(game: Game, x: number, y: number) {
+        super(x, y)
         this.game = game
-        this.x = x
-        this.y = y
         this.image = new Image()
         this.image.src = grassImage
         if(this.x + Cell.width > this.game.w() || this.y + Cell.height > this.game.h()) {
             this.fullyDrawn = false
         }
+        this.defenderExist = false
     }
 
     draw(): void {
@@ -37,6 +35,18 @@ export default class Cell implements GameObject {
 
     update(): void {
 
+    }
+
+    public w(): number {
+        return Cell.width
+    }
+
+    public h(): number {
+        return Cell.height
+    }
+
+    public isFullyDrawn(): boolean {
+        return this.fullyDrawn
     }
 
 }

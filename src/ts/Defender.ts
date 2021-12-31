@@ -1,14 +1,9 @@
-import GameObject from "./interfaces/GameObject";
+import GameObject from "./GameObject";
 
-export default abstract class Defender implements GameObject {
-    protected x: number
-    protected y: number
+export default abstract class Defender extends GameObject {
+
+    protected image: HTMLImageElement
     protected health: number
     protected power: number
 
-    draw(): void {
-    }
-
-    update(): void {
-    }
 }

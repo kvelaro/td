@@ -1,16 +1,29 @@
-import GameObject from "./interfaces/GameObject";
 import Cell from "./Cell";
+import InputHandler from "./InputHandler";
+import GameObject from "./GameObject";
 
 export default class Game {
+    private gameCanvasElement: HTMLCanvasElement
     private ctx: CanvasRenderingContext2D
     private width: number
     private height: number
-    private gameObjects: Array<GameObject>
-    constructor(ctx: CanvasRenderingContext2D, width: number, height: number) {
-        this.ctx = ctx
+    public objects: Array<GameObject>
+    constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
+        this.gameCanvasElement = gameScreen
+        this.ctx = gameScreen.getContext('2d')
         this.width = width
         this.height = height
-        this.gameObjects = []
+
+        this.ctx.canvas.width  = this.width
+        this.ctx.canvas.height = this.height
+
+        this.objects = []
+
+        new InputHandler(this)
+    }
+
+    public canvas(): HTMLCanvasElement {
+        return this.gameCanvasElement
     }
 
     public context(): CanvasRenderingContext2D {
@@ -26,24 +39,26 @@ export default class Game {
     }
 
     public start(): void {
-        this.background()
+       this.background()
     }
 
     public loop(): void {
         //generic section
-        this.gameObjects.forEach((object) => object.draw())
-        this.gameObjects.forEach((object) => object.update())
+        this.objects.forEach((object) => object.draw())
+        this.objects.forEach((object) => object.update())
     }
 
     private background(): void {
         let cellWidth = Cell.width
         let cellHeight = Cell.height
-        let rows = this.w() / cellWidth
-        let cols = this.h() / cellHeight
+        let rows = this.h() / cellHeight
+        let cols = this.w() / cellWidth
         for (let i = 0; i < rows; i++ ) {
             for (let j = 0; j < cols; j++ ) {
-                this.gameObjects.push(new Cell(this, i * cellWidth, j * cellHeight))
+                this.objects.push(new Cell(this, j * cellWidth, i * cellHeight))
             }
         }
     }
+
+
 }

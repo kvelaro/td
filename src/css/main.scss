@@ -6,8 +6,44 @@
 html, body {
   width:  100%;
   height: 100%;
+  position: relative;
 }
 
 #gameScreen {
   border: 1px solid black;
+}
+
+.menu {
+  display: flex;
+  position: absolute;
+  padding: 5px;
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+    }
+
+    &--selected {
+      img {
+        border: 2px solid #ccc;
+      }
+    }
+
+    span {
+      position: absolute;
+      bottom: -15px;
+      font-weight: bold;
+      color: darkmagenta;
+    }
+  }
 }
