@@ -17,7 +17,7 @@ export default class Lieutenant extends Defender {
         this.image = new Image(this.width, this.height)
         this.image.src = irelandSoldier
         this.health = 100
-        this.power = 20
+        this.power = 12
     }
 
     draw(): void {

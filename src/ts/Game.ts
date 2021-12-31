@@ -1,6 +1,7 @@
 import Cell from "./Cell";
 import InputHandler from "./InputHandler";
 import GameObject from "./GameObject";
+import Money from "./Money";
 
 export default class Game {
     private gameCanvasElement: HTMLCanvasElement
@@ -8,6 +9,7 @@ export default class Game {
     private width: number
     private height: number
     public objects: Array<GameObject>
+
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -58,7 +60,6 @@ export default class Game {
                 this.objects.push(new Cell(this, j * cellWidth, i * cellHeight))
             }
         }
+        this.objects.push(new Money(this, this.width - 200, 20))
     }
-
-
 }

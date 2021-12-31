@@ -19,7 +19,6 @@ html, body {
   padding: 5px;
 
   &__item {
-    display: flex;
     justify-content: center;
     padding: 5px;
     margin: 5px;
@@ -44,6 +43,36 @@ html, body {
       bottom: -15px;
       font-weight: bold;
       color: darkmagenta;
+    }
+  }
+}
+
+.treasure {
+  display: flex;
+  position: absolute;
+  right: 100px;
+  padding: 5px;
+
+  &__item {
+    justify-content: center;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+    }
+
+    span {
+      position: absolute;
+      bottom: 0;
+      left: 30px;
+      font-weight: bold;
+      color: darkmagenta;
+      font-size: 20px;
     }
   }
 }

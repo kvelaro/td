@@ -1,12 +1,13 @@
 import Game from "./Game";
 import Collision from "./Collision";
-import Pixel from "./interfaces/Pixel";
+import Pixel from "./Pixel";
 import Cell from "./Cell";
 import Corporal from "./Corporal";
 import Soldier from "./Soldier";
 import Sergeant from "./Sergeant";
 import Ensign from "./Ensign";
 import Lieutenant from "./Lieutenant";
+import Money from "./Money";
 
 export default class InputHandler {
     game: Game
@@ -19,9 +20,22 @@ export default class InputHandler {
             let x = e.x - canvasRect.left
             let y = e.y - canvasRect.top
 
+            let filter = self.game.objects.filter(function(object) {
+                return object instanceof Money
+            })
+
+            if(!filter) {
+                return
+            }
+            let moneyObject = <Money>filter.pop()
+
             self.game.objects.forEach(function(object) {
                 let selected = document.querySelector('.menu__item--selected')
                 if(!selected) {
+                    return
+                }
+                let cost = <number><unknown>selected.getAttribute('data-cost')
+                if(cost > moneyObject.getAmount()) {
                     return
                 }
                 let defender = null
@@ -52,6 +66,7 @@ export default class InputHandler {
                     object.defenderExist == false &&
                     object.isFullyDrawn()
                 ) {
+                    moneyObject.addAmount(cost * -1)
                     object.defenderExist = true
                     self.game.objects.push(defender)
                 }
