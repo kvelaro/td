@@ -1,9 +1,10 @@
-import Game from "./Game";
 import GameObject from "./interfaces/GameObject";
 
-export default class Defender implements GameObject {
-    constructor(game: Game) {
-    }
+export default abstract class Defender implements GameObject {
+    protected x: number
+    protected y: number
+    protected health: number
+    protected power: number
 
     draw(): void {
     }
