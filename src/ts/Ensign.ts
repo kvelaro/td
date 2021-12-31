@@ -17,7 +17,6 @@ export default class Ensign extends Defender {
         this.image = new Image(this.width, this.height)
         this.image.src = angrySheriff
         this.health = 100
-        this.power = 9
     }
 
     draw(): void {

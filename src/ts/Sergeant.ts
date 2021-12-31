@@ -17,7 +17,6 @@ export default class Sergeant extends Defender {
         this.image = new Image(this.width, this.height)
         this.image.src = aborigen
         this.health = 100
-        this.power = 7
     }
 
     draw(): void {

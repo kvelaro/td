@@ -17,7 +17,6 @@ export default class Soldier extends Defender {
         this.image = new Image(this.width, this.height)
         this.image.src = zombieSoldier
         this.health = 100
-        this.power = 5
     }
 
     draw(): void {
