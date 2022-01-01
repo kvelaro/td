@@ -10,4 +10,8 @@ export default abstract class Bullet extends GameObject {
     public isDeleted(): boolean {
         return this.delete
     }
+
+    public update() {
+
+    }
 }

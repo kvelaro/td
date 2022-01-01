@@ -8,10 +8,8 @@ const IMAGE_WIDTH = 678
 const IMAGE_HEIGHT = 859
 
 export default class Ensign extends Defender {
-    protected game: Game
-
     constructor(game: Game, x: number, y: number) {
-        super(x, y)
+        super(game, x, y)
         this.game = game
         this.width = Cell.width - 2
         this.height = Cell.height - 2

@@ -9,9 +9,8 @@ const IMAGE_WIDTH = 322
 const IMAGE_HEIGHT = 404
 
 export default class Corporal extends Defender {
-    protected game: Game
     constructor(game: Game, x: number, y: number) {
-        super(x, y)
+        super(game, x, y)
         this.game = game
         this.width = Cell.width - 2
         this.height = Cell.height - 2

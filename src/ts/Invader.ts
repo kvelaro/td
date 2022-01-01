@@ -8,6 +8,7 @@ export default abstract class Invader extends GameObject {
     protected power: number
     protected currentSpeed: number
     protected speed: number
+    public delete: boolean
 
     constructor(x: number, y: number) {
         super(x, y);

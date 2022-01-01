@@ -29,6 +29,9 @@ export default class SoldierBullet extends Bullet {
             let obj = this.game.objects[i]
             if(obj instanceof Invader && Collision(this, obj))  {
                 obj.health -= this.damage
+                if(obj.health <= 0) {
+                    obj.delete = true
+                }
                 this.delete = true
             }
         }
