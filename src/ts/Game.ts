@@ -69,10 +69,10 @@ export default class Game {
                 return invader instanceof Invader
             })
             objects.forEach(function(object, i) {
-                if(object.delete) {
+                if(object && object.delete) {
                     objects.splice(i, 1)
                 }
-                else {
+                else if (object) {
                     object.draw()
                     object.update()
                 }
@@ -99,6 +99,7 @@ export default class Game {
     }
 
     private zombies(): void {
+        //if (this.frame > 100) return
         if(this.frame % 100 == 0) {
             let zombieRandom = Math.floor(Math.random() * 3)
             let zombie = null
@@ -121,6 +122,7 @@ export default class Game {
     public over(): void {
         this.state = STATE_OVER
         this.context().save()
+        this.context().fillStyle = "#000"
         this.context().font = "50px Arial"
         this.context().fillText('GAME OVER', this.width / 2, this.height / 2)
         this.context().restore()

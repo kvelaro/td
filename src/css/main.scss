@@ -19,6 +19,7 @@ html, body {
   padding: 5px;
 
   &__item {
+    display: flex;
     justify-content: center;
     padding: 5px;
     margin: 5px;
@@ -54,6 +55,7 @@ html, body {
   padding: 5px;
 
   &__item {
+    display: flex;
     justify-content: center;
     padding: 5px;
     margin: 5px;

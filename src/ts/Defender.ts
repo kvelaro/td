@@ -25,12 +25,11 @@ export default abstract class Defender extends GameObject {
         let invaders = objects.filter(function(object) {
             return object instanceof Invader
         })
-
         //collision detection between invader and defender
         for(let i = 0; i < invaders.length; i++) {
-            let invader = <Invader>objects[i]
+            let invader = <Invader>invaders[i]
+            //console.log(invader instanceof Invader)
             if(Collision(invader, this)) {
-
                 this.health -= invader.damage
                 if(this.health <= 0) {
                     this.delete = true

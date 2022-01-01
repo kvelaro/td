@@ -33,7 +33,11 @@ export default class Money extends GameObject {
     }
 
     update() {
-        this.game.context().font = '20px Arial'
+        let ctx = this.game.context()
+        ctx.save()
+        ctx.fillStyle = '#000'
+        ctx.font = '20px Arial'
         this.game.context().fillText(<string><unknown>this.amount, this.x, this.y + 20)
+        ctx.restore()
     }
 }
