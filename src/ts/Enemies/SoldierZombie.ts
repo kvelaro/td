@@ -16,6 +16,12 @@ export default class SoldierZombie extends Invader {
 
     draw(): void {
         let ctx = this.game.context()
+        ctx.save()
+        ctx.fillStyle = '#000'
+        ctx.font = '12px Arial'
+        ctx.fillText(`Soldier zombie ${this.health}`, this.x, this.y, this.width)
+        ctx.restore()
+
         ctx.drawImage(this.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, this.x, this.y, this.w(), this.h())
     }
 }
