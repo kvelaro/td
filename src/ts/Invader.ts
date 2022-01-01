@@ -24,14 +24,23 @@ export default abstract class Invader extends GameObject {
 
     update(): void {
         let objects = this.game.objects
+        //check collision between defenders and zombies
+        if(this.currentSpeed == 0) {
+            this.currentSpeed = this.speed
+        }
         for(let i = 0; i < objects.length; i++) {
             if(objects[i] instanceof Defender && Collision(objects[i], this)) {
+                let object = <Defender>objects[i]
                 this.currentSpeed = 0
+                this.health -= object.damage
+                if(this.health <= 0) {
+                    this.delete = true
+                }
             }
         }
         this.x += this.currentSpeed * -1
         if(this.x <= -100) {
-            this.game.over()
+             this.game.over()
         }
     }
 }

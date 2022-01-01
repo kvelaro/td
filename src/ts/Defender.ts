@@ -7,7 +7,7 @@ export default abstract class Defender extends GameObject {
     protected game: Game
     protected image: HTMLImageElement
     public health: number
-    protected power: number
+    public damage: number
     protected timer: number
     protected bullets: Array<Bullet>
 
