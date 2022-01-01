@@ -17,6 +17,7 @@ export default abstract class Defender extends GameObject {
         this.health = 100
         this.bullets = []
         this.timer = 0
+        this.damage = 0
     }
     update() {
         //if bullets marked as deleted, delete them
