@@ -4,11 +4,13 @@ import Cell from "../Cell";
 import ninja from '../../images/ninja.png'
 import SoldierBullet from "../Bullets/SoldierBullet";
 
-const IMAGE_WIDTH = 600
-const IMAGE_HEIGHT = 500
+const IMAGE_WIDTH = 250
+const IMAGE_HEIGHT = 402
 
 export default class Soldier extends Defender {
     private game: Game
+    private speed: number
+    private currentSpeed: number
     constructor(game: Game, x: number, y: number) {
         super(x, y)
         this.game = game
@@ -16,6 +18,8 @@ export default class Soldier extends Defender {
         this.height = Cell.height - 2
         this.image = new Image(this.width, this.height)
         this.image.src = ninja
+        this.speed = 2
+        this.currentSpeed = this.speed
     }
 
     draw(): void {
@@ -37,11 +41,15 @@ export default class Soldier extends Defender {
     }
 
     update(): void {
+        this.x += this.currentSpeed
+
         for(let i = 0; i < this.bullets.length; i++) {
             if(this.bullets[i].isDeleted()) {
                 this.bullets.splice(i, 1)
             }
-            this.bullets[i].update()
+            else {
+                this.bullets[i].update()
+            }
         }
     }
 }

@@ -11,10 +11,8 @@ game.start()
 
 let prev = 0
 function gameLoop(interval: number) {
-
     if(interval - prev >= FPS) {
         prev = FPS - (interval - prev)
-        game.context().clearRect(0 ,0, GAME_WIDTH, GAME_HEIGHT)
         game.loop()
     }
     requestAnimationFrame(gameLoop)

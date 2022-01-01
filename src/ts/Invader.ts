@@ -4,8 +4,9 @@ import Bullet from "./Bullet";
 export default abstract class Invader extends GameObject {
 
     protected image: HTMLImageElement
-    protected health: number
+    public health: number
     protected power: number
+    protected currentSpeed: number
     protected speed: number
 
     constructor(x: number, y: number) {

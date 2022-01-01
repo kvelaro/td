@@ -5,8 +5,8 @@ import funnyFox  from '../../images/funny-fox.png'
 import LieutenantBullet from "../Bullets/LieutenantBullet";
 import CorporalBullet from "../Bullets/CorporalBullet";
 
-const IMAGE_WIDTH = 417
-const IMAGE_HEIGHT = 434
+const IMAGE_WIDTH = 322
+const IMAGE_HEIGHT = 404
 
 export default class Corporal extends Defender {
     protected game: Game
@@ -42,7 +42,9 @@ export default class Corporal extends Defender {
             if(this.bullets[i].isDeleted()) {
                 this.bullets.splice(i, 1)
             }
-            this.bullets[i].update()
+            else {
+                this.bullets[i].update()
+            }
         }
     }
 }

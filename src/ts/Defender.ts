@@ -4,7 +4,7 @@ import Bullet from "./Bullet";
 export default abstract class Defender extends GameObject {
 
     protected image: HTMLImageElement
-    protected health: number
+    public health: number
     protected power: number
     protected timer: number
     protected bullets: Array<Bullet>

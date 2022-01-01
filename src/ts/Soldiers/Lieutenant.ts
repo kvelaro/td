@@ -42,7 +42,9 @@ export default class Lieutenant extends Defender {
             if(this.bullets[i].isDeleted()) {
                 this.bullets.splice(i, 1)
             }
-            this.bullets[i].update()
+            else {
+                this.bullets[i].update()
+            }
         }
     }
 }

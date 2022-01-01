@@ -4,7 +4,7 @@ import Cell from "../Cell";
 import angrySheriff from '../../images/angry-sheriff.png'
 import EnsignBullet from "../Bullets/EnsignBullet";
 
-const IMAGE_WIDTH = 840
+const IMAGE_WIDTH = 678
 const IMAGE_HEIGHT = 859
 
 export default class Ensign extends Defender {
@@ -42,7 +42,9 @@ export default class Ensign extends Defender {
             if(this.bullets[i].isDeleted()) {
                 this.bullets.splice(i, 1)
             }
-            this.bullets[i].update()
+            else {
+                this.bullets[i].update()
+            }
         }
     }
 }

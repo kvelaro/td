@@ -6,7 +6,7 @@ import Invader from "../Invader";
 const IMAGE_WIDTH = 600
 const IMAGE_HEIGHT = 500
 
-export default class SoldierZombie extends Invader {
+export default class VampireZombie extends Invader {
     private game: Game
     constructor(game: Game, x: number, y: number) {
         super(x, y)
@@ -15,7 +15,7 @@ export default class SoldierZombie extends Invader {
         this.height = Cell.height - 2
         this.image = new Image(this.width, this.height)
         this.image.src = zombie
-        this.speed = 10
+        this.speed = 1
     }
 
     draw(): void {
@@ -24,6 +24,9 @@ export default class SoldierZombie extends Invader {
     }
 
     update(): void {
-
+        this.x += this.speed * -1
+        if(this.x <= -100) {
+            this.game.over()
+        }
     }
 }
