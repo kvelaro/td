@@ -41,15 +41,9 @@ export default class Soldier extends Defender {
     }
 
     update(): void {
-        this.x += this.currentSpeed
+        super.update()
+        //this.x += this.currentSpeed
 
-        for(let i = 0; i < this.bullets.length; i++) {
-            if(this.bullets[i].isDeleted()) {
-                this.bullets.splice(i, 1)
-            }
-            else {
-                this.bullets[i].update()
-            }
-        }
+
     }
 }

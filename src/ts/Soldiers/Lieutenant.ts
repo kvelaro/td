@@ -36,15 +36,4 @@ export default class Lieutenant extends Defender {
             bullet.draw()
         })
     }
-
-    update(): void {
-        for(let i = 0; i < this.bullets.length; i++) {
-            if(this.bullets[i].isDeleted()) {
-                this.bullets.splice(i, 1)
-            }
-            else {
-                this.bullets[i].update()
-            }
-        }
-    }
 }
