@@ -20,9 +20,11 @@ export default class Corporal extends Defender {
 
     draw(): void {
         let ctx = this.game.context()
-
+        ctx.save()
+        ctx.fillStyle = '#000'
         ctx.font = '12px Arial'
-        ctx.fillText('Corporal', this.x, this.y, this.width)
+        ctx.fillText(`Corporal ${this.health}`, this.x, this.y, this.width)
+        ctx.restore()
 
         let self = this
 

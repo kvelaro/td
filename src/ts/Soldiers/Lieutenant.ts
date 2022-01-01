@@ -19,9 +19,11 @@ export default class Lieutenant extends Defender {
 
     draw(): void {
         let ctx = this.game.context()
-
+        ctx.save()
+        ctx.fillStyle = '#000'
         ctx.font = '12px Arial'
-        ctx.fillText('Lieutenant', this.x, this.y, this.width)
+        ctx.fillText(`Lieutenant ${this.health}`, this.x, this.y, this.width)
+        ctx.restore()
 
         let self = this
 
