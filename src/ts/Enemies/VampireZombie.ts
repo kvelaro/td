@@ -7,12 +7,8 @@ const IMAGE_WIDTH = 600
 const IMAGE_HEIGHT = 500
 
 export default class VampireZombie extends Invader {
-    private game: Game
     constructor(game: Game, x: number, y: number) {
-        super(x, y)
-        this.game = game
-        this.width = Cell.width - 2
-        this.height = Cell.height - 2
+        super(game, x, y)
         this.image = new Image(this.width, this.height)
         this.image.src = zombie
         this.speed = 1
@@ -21,12 +17,5 @@ export default class VampireZombie extends Invader {
     draw(): void {
         let ctx = this.game.context()
         ctx.drawImage(this.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, this.x, this.y, this.w(), this.h())
-    }
-
-    update(): void {
-        this.x += this.speed * -1
-        if(this.x <= -100) {
-            this.game.over()
-        }
     }
 }
