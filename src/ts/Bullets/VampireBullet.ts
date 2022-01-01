@@ -10,7 +10,6 @@ export default class VampireBullet extends Bullet {
         this.height = 5
         this.speed = 3
         this.damage = 5
-        this.delete = false
     }
 
     draw() {

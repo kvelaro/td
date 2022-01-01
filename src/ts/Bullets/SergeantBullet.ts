@@ -11,7 +11,6 @@ export default class SergeantBullet extends Bullet {
         this.height = 7
         this.speed = 5
         this.damage = 7
-        this.delete = false
     }
 
     draw() {

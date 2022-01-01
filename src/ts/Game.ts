@@ -61,8 +61,17 @@ export default class Game {
             this.context().clearRect(0 ,0, this.width, this.height)
             this.frame++
             this.zombies()
-            this.objects.forEach((object) => object.draw())
-            this.objects.forEach((object) => object.update())
+
+            let objects = this.objects
+            objects.forEach(function(object, i) {
+                if(object.delete) {
+                    objects.splice(i, 1)
+                }
+                else {
+                    object.draw()
+                    object.update()
+                }
+            })
         }
     }
 

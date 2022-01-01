@@ -3,10 +3,12 @@ export default abstract class GameObject {
     public y: number
     protected width: number
     protected height: number
+    public delete: boolean
 
     constructor(x: number, y: number) {
         this.x = x
         this.y = y
+        this.delete = false
     }
 
     public w(): number {

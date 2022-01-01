@@ -9,10 +9,9 @@ export default abstract class Invader extends GameObject {
     protected game: Game
     protected image: HTMLImageElement
     public health: number
-    protected power: number
+    public damage: number
     protected currentSpeed: number
     protected speed: number
-    public delete: boolean
 
     constructor(game: Game, x: number, y: number) {
         super(x, y);
@@ -20,6 +19,7 @@ export default abstract class Invader extends GameObject {
         this.width = Cell.width - 2
         this.height = Cell.height - 2
         this.health = 100
+        this.damage = 1
     }
 
     update(): void {

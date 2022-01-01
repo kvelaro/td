@@ -4,7 +4,6 @@ import Bullet from "../Bullet";
 
 export default class EnsignBullet extends Bullet {
     protected speed: number
-    protected delete: boolean
     constructor(game: Game, x: number, y: number) {
         super(x, y);
         this.game = game
@@ -12,7 +11,6 @@ export default class EnsignBullet extends Bullet {
         this.height = 7
         this.speed = 5
         this.damage = 9
-        this.delete = false
     }
 
     draw() {
