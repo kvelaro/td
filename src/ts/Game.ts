@@ -68,7 +68,6 @@ export default class Game {
             let filter = objects.filter(function(invader) {
                 return invader instanceof Invader
             })
-            console.log(filter)
             objects.forEach(function(object, i) {
                 if(object.delete) {
                     objects.splice(i, 1)

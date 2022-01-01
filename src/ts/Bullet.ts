@@ -1,5 +1,8 @@
 import GameObject from "./GameObject";
 import Game from "./Game";
+import Invader from "./Invader";
+import Collision from "./Collision";
+import Money from "./Money";
 
 export default abstract class Bullet extends GameObject {
     protected game: Game
@@ -11,6 +14,27 @@ export default abstract class Bullet extends GameObject {
     }
 
     public update() {
+        this.x += this.speed
+        if(this.x >= this.game.w()) {
+            this.delete = true
+        }
 
+        let moneyObject = null
+        let filter = this.game.objects.filter(object => {return object instanceof Money})
+        if(filter) {
+            moneyObject = <Money>filter.pop()
+        }
+
+        for(let i = 0; i < this.game.objects.length; i++) {
+            let obj = this.game.objects[i]
+            if(obj instanceof Invader && Collision(this, obj))  {
+                obj.health -= this.damage
+                moneyObject.addAmount(this.damage)
+                if(obj.health <= 0) {
+                    obj.delete = true
+                }
+                this.delete = true
+            }
+        }
     }
 }

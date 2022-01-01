@@ -18,13 +18,6 @@ export default class EnsignBullet extends Bullet {
         this.game.context().fillRect(this.x + Cell.width, this.y + Cell.height / 2, this.width, this.height)
     }
 
-    update() {
-        this.x += this.speed
-        if(this.x >= this.game.w()) {
-            this.delete = true
-        }
-    }
-
     public isDeleted(): boolean {
         return this.delete
     }
