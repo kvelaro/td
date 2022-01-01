@@ -5,6 +5,7 @@ import Money from "./Money";
 import SimpleZombie from "./Enemies/SimpleZombie";
 import SoldierZombie from "./Enemies/SoldierZombie";
 import VampireZombie from "./Enemies/VampireZombie";
+import Invader from "./Invader";
 
 const STATE_PLAYING = 'PLAYING'
 const STATE_PAUSED = 'PAUSED'
@@ -63,6 +64,11 @@ export default class Game {
             this.zombies()
 
             let objects = this.objects
+
+            let filter = objects.filter(function(invader) {
+                return invader instanceof Invader
+            })
+            console.log(filter)
             objects.forEach(function(object, i) {
                 if(object.delete) {
                     objects.splice(i, 1)

@@ -1,5 +1,4 @@
 import Game from "../Game";
-import Cell from "../Cell";
 import zombie from '../../images/zombie1.png'
 import Invader from "../Invader";
 
@@ -13,7 +12,6 @@ export default class SimpleZombie extends Invader {
         this.image.src = zombie
         this.speed = 2
         this.currentSpeed = this.speed
-        this.damage = 1
     }
 
     draw(): void {

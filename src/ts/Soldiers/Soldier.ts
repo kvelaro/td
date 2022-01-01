@@ -40,11 +40,4 @@ export default class Soldier extends Defender {
             bullet.draw()
         })
     }
-
-    update(): void {
-        super.update()
-        //this.x += this.currentSpeed
-
-
-    }
 }

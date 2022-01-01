@@ -1,6 +1,5 @@
 import Game from "../Game";
-import Cell from "../Cell";
-import zombie from '../../images/zombie-soldier.png'
+import zombieSoldier from '../../images/zombie-soldier.png'
 import Invader from "../Invader";
 
 const IMAGE_WIDTH = 345
@@ -10,8 +9,9 @@ export default class SoldierZombie extends Invader {
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.image = new Image(this.width, this.height)
-        this.image.src = zombie
+        this.image.src = zombieSoldier
         this.speed = 1
+        this.currentSpeed = this.speed
         this.damage = 2
     }
 

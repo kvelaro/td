@@ -12,7 +12,7 @@ export default class VampireZombie extends Invader {
         this.image = new Image(this.width, this.height)
         this.image.src = zombie
         this.speed = 1
-        this.damage = 1
+        this.currentSpeed = this.speed
     }
 
     draw(): void {
