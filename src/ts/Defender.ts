@@ -22,8 +22,12 @@ export default abstract class Defender extends GameObject {
     }
     update() {
         let objects = this.game.objects
-        for(let i = 0; i < objects.length; i++) {
-            if(objects[i] instanceof Invader && Collision(objects[i], this)) {
+        let invaders = objects.filter(function(object) {
+            return object instanceof Invader
+        })
+        //collision detection between invader and defender
+        for(let i = 0; i < invaders.length; i++) {
+            if(Collision(invaders[i], this)) {
                 let object = <Invader>objects[i]
                 this.health -= object.damage
                 if(this.health <= 0) {
@@ -31,13 +35,26 @@ export default abstract class Defender extends GameObject {
                 }
             }
         }
+        //collision detection between bullet and invader
+        for(let i = 0; i < this.bullets.length; i++) {
+            let bullet = <Bullet>this.bullets[i]
+            for(let j = 0; j < invaders.length; j++) {
+                let invader = <Invader>invaders[j]
+                if(Collision(this.bullets[i], invader)) {
+                    invader.health -= bullet.damage
+                    if(invader.health <= 0) {
+                        invader.delete = true
+                    }
+                }
+            }
+        }
         //if bullets marked as deleted, delete them
-        // for(let i = 0; i < this.bullets.length; i++) {
-        //     if (this.bullets[i].isDeleted()) {
-        //         this.bullets.splice(i, 1)
-        //     } else {
-        //         this.bullets[i].update()
-        //     }
-        // }
+        for(let i = 0; i < this.bullets.length; i++) {
+            if (this.bullets[i].isDeleted()) {
+                this.bullets.splice(i, 1)
+            } else {
+                this.bullets[i].update()
+            }
+        }
     }
 }

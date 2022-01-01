@@ -37,8 +37,4 @@ export default class Corporal extends Defender {
             bullet.draw()
         })
     }
-
-    update(): void {
-        super.update()
-    }
 }
