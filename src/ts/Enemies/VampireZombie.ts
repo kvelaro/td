@@ -2,17 +2,26 @@ import Game from "../Game";
 import Cell from "../Cell";
 import zombie from '../../images/zombie2.png'
 import Invader from "../Invader";
+import SoldierBullet from "../Bullets/SoldierBullet";
+import VampireBullet from "../Bullets/VampireBullet";
+import Bullet from "../Bullet";
+import Collision from "../Collision";
+import Defender from "../Defender";
 
 const IMAGE_WIDTH = 600
 const IMAGE_HEIGHT = 500
 
 export default class VampireZombie extends Invader {
+    protected timer: number
+    protected bullets: Array<VampireBullet>
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.image = new Image(this.width, this.height)
         this.image.src = zombie
         this.speed = 1
         this.currentSpeed = this.speed
+        this.timer = 0
+        this.bullets = []
     }
 
     draw(): void {
@@ -23,5 +32,41 @@ export default class VampireZombie extends Invader {
         ctx.fillText(`Vampire zombie ${this.health}`, this.x, this.y, this.width)
         ctx.restore()
         ctx.drawImage(this.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, this.x, this.y, this.w(), this.h())
+
+        if(this.timer++ % 150 == 0) {
+            this.bullets.push(new VampireBullet(this.game, this.x - Cell.width, this.y))
+        }
+        this.bullets.forEach(function(bullet) {
+            bullet.draw()
+        })
+    }
+
+    update() {
+        super.update()
+        let objects = this.game.objects
+        let defenders = objects.filter(function(object) {
+            return object instanceof Defender
+        })
+        //collision detection between bullet and invader
+        for(let i = 0; i < this.bullets.length; i++) {
+            let bullet = <Bullet>this.bullets[i]
+            for(let j = 0; j < defenders.length; j++) {
+                let defender = <Defender>defenders[j]
+                if(Collision(this.bullets[i], defender)) {
+                    defender.health -= bullet.damage
+                    if(defender.health <= 0) {
+                        defender.delete = true
+                    }
+                }
+            }
+        }
+        //if bullets marked as deleted, delete them
+        for(let i = 0; i < this.bullets.length; i++) {
+            if (this.bullets[i].isDeleted()) {
+                this.bullets.splice(i, 1)
+            } else {
+                this.bullets[i].update()
+            }
+        }
     }
 }
