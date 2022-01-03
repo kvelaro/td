@@ -6,6 +6,9 @@ import SimpleZombie from "./Enemies/SimpleZombie";
 import SoldierZombie from "./Enemies/SoldierZombie";
 import VampireZombie from "./Enemies/VampireZombie";
 import Invader from "./Invader";
+import Level1 from "./Levels/Level1";
+import Level from "./Level";
+import Wave from "./interfaces/Wave";
 
 const STATE_PLAYING = 'PLAYING'
 const STATE_PAUSED = 'PAUSED'
@@ -21,6 +24,7 @@ export default class Game {
     private rows: number
     private cols: number
     private state: string
+    private level: Level
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -53,7 +57,9 @@ export default class Game {
     }
 
     public start(): void {
-       this.background()
+        this.state = STATE_PLAYING
+        this.level = new Level1()
+        this.background()
     }
 
     public loop(): void {
@@ -99,23 +105,11 @@ export default class Game {
     }
 
     private zombies(): void {
-        //if (this.frame > 100) return
+        if(this.frame % 5000 == 0) {
+            this.zombiesWave()
+        }
         if(this.frame % 100 == 0) {
-            let zombieRandom = Math.floor(Math.random() * 3)
-            let zombie = null
-            let yPos = Math.floor(Math.random() * this.rows) * Cell.height
-            switch (zombieRandom) {
-                case 0:
-                    zombie = new SimpleZombie(this, this.width, yPos)
-                    break
-                case 1:
-                    zombie = new SoldierZombie(this, this.width, yPos)
-                    break
-                case 2:
-                    zombie = new VampireZombie(this, this.width, yPos)
-                    break
-            }
-            this.objects.push(zombie)
+            this.objects.push(this.zombie())
         }
     }
 
@@ -124,11 +118,54 @@ export default class Game {
         this.context().save()
         this.context().fillStyle = "#000"
         this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
         this.context().fillText('GAME OVER', this.width / 2, this.height / 2)
+        this.context().restore()
+    }
+
+    public win(): void {
+        this.state = STATE_OVER
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText('YOU WON', this.width / 2, this.height / 2)
         this.context().restore()
     }
 
     public currentFrame() {
         return this.frame
+    }
+
+    public zombie(rand = false): Invader {
+        let zombieRandom = Math.floor(Math.random() * 3)
+        let zombie = null
+        let yPos = Math.floor(Math.random() * this.rows) * Cell.height
+        let random = 1
+        if(rand) {
+            random = Math.floor(Math.random() * 1000)
+        }
+        switch (zombieRandom) {
+            case 0:
+                zombie = new SimpleZombie(this, this.width + random, yPos + 1)
+                break
+            case 1:
+                zombie = new SoldierZombie(this, this.width + random, yPos + 1)
+                break
+            case 2:
+                zombie = new VampireZombie(this, this.width + random, yPos + 1)
+                break
+        }
+        return zombie
+    }
+
+    public zombiesWave(): void {
+        let waveObj = <Wave>this.level.next()
+        if(!waveObj) {
+            this.win()
+        }
+        for(let i = 0; i < waveObj.zombieCount; i++) {
+            this.objects.push(this.zombie())
+        }
     }
 }

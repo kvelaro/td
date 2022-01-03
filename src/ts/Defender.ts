@@ -3,6 +3,7 @@ import Bullet from "./Bullet";
 import Game from "./Game";
 import Invader from "./Invader";
 import Collision from "./Collision";
+import Cell from "./Cell";
 
 export default abstract class Defender extends GameObject {
     protected game: Game
@@ -11,6 +12,7 @@ export default abstract class Defender extends GameObject {
     public damage: number
     protected timer: number
     protected bullets: Array<Bullet>
+    protected shooting: boolean
 
     constructor(game: Game, x: number, y: number) {
         super(x, y)
@@ -19,12 +21,33 @@ export default abstract class Defender extends GameObject {
         this.bullets = []
         this.timer = 0
         this.damage = 0
+        this.shooting = false
     }
+
+    draw() {
+        super.draw()
+        this.shooting = false
+        let self = this
+        this.game.objects.forEach(function (object) {
+            if(object instanceof Invader && self.y == object.y) {
+                self.shooting = true
+            }
+        })
+    }
+
     update() {
         let objects = this.game.objects
-        let invaders = objects.filter(function(object) {
-            return object instanceof Invader
+        let invaders:Array<Invader> = []
+        let cells:Array<Cell> = []
+        objects.forEach(function(object) {
+            if(object instanceof Invader) {
+                invaders.push(object)
+            }
+            if(object instanceof Cell) {
+                cells.push(object)
+            }
         })
+
         //collision detection between invader and defender
         for(let i = 0; i < invaders.length; i++) {
             let invader = <Invader>invaders[i]
@@ -33,6 +56,12 @@ export default abstract class Defender extends GameObject {
                 this.health -= invader.damage
                 if(this.health <= 0) {
                     this.delete = true
+                    let self = this
+                    cells.forEach(function(cell) {
+                        if(cell.x == self.x - 1 && cell.y == self.y - 1) {
+                            cell.defenderExist = false
+                        }
+                    })
                 }
             }
         }
@@ -45,6 +74,7 @@ export default abstract class Defender extends GameObject {
                     invader.health -= bullet.damage
                     if(invader.health <= 0) {
                         invader.delete = true
+                        this.shooting = false
                     }
                 }
             }

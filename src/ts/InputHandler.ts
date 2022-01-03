@@ -16,6 +16,17 @@ export default class InputHandler {
     constructor(game: Game) {
         this.game = game
         let self = this
+
+        document.addEventListener('keydown', function(e) {
+            switch (e.code) {
+                case 'Space':
+                    if (self.game.currentState() == 'OVER') {
+                    //
+                    }
+                    break
+            }
+        })
+
         this.game.canvas().addEventListener('click', function(e: MouseEvent) {
             let canvasRect = self.game.canvas().getBoundingClientRect()
             let x = e.x - canvasRect.left

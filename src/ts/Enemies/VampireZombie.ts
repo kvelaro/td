@@ -44,10 +44,17 @@ export default class VampireZombie extends Invader {
     update() {
         super.update()
         let objects = this.game.objects
-        let defenders = objects.filter(function(object) {
-            return object instanceof Defender
+        let defenders: Array<Defender> = []
+        let cells: Array<Cell> = []
+        objects.forEach(function(object) {
+            if(object instanceof Defender) {
+                defenders.push(object)
+            }
+            if(object instanceof Cell) {
+                cells.push(object)
+            }
         })
-        //collision detection between bullet and invader
+        //collision detection between bullet and defender
         for(let i = 0; i < this.bullets.length; i++) {
             let bullet = <Bullet>this.bullets[i]
             for(let j = 0; j < defenders.length; j++) {
@@ -56,6 +63,12 @@ export default class VampireZombie extends Invader {
                     defender.health -= bullet.damage
                     if(defender.health <= 0) {
                         defender.delete = true
+                        let self = this
+                        cells.forEach(function(cell) {
+                            if(cell.x == self.x - 1 && cell.y == self.y - 1) {
+                                cell.defenderExist = false
+                            }
+                        })
                     }
                 }
             }

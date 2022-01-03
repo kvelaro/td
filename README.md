@@ -1,4 +1,4 @@
-# 🚀 Tower defense game
+# 🚀 Soldiers vs Zombies
 
 ```
 npm run build

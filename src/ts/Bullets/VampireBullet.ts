@@ -1,8 +1,6 @@
 import Game from "../Game";
 import Cell from "../Cell";
 import Bullet from "../Bullet";
-import Money from "../Money";
-import Invader from "../Invader";
 import Collision from "../Collision";
 import Defender from "../Defender";
 

@@ -29,7 +29,7 @@ export default abstract class Bullet extends GameObject {
             let obj = this.game.objects[i]
             if(obj instanceof Invader && Collision(this, obj))  {
                 obj.health -= this.damage
-                moneyObject.addAmount(this.damage * 10)
+                moneyObject.addAmount(this.damage * 2)
                 if(obj.health <= 0) {
                     obj.delete = true
                 }
