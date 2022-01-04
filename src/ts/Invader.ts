@@ -24,17 +24,34 @@ export default abstract class Invader extends GameObject {
 
     update(): void {
         let objects = this.game.objects
+        let cells:Array<Cell> = []
+        let defenders: Array<Defender> = []
+        objects.forEach(function(object) {
+            if(object instanceof Defender) {
+                defenders.push(object)
+            }
+            if(object instanceof Cell) {
+                cells.push(object)
+            }
+        })
+
         //check collision between defenders and zombies
         if(this.currentSpeed == 0) {
             this.currentSpeed = this.speed
         }
-        for(let i = 0; i < objects.length; i++) {
-            if(objects[i] instanceof Defender && Collision(objects[i], this)) {
-                let object = <Defender>objects[i]
+        for(let i = 0; i < defenders.length; i++) {
+            if(Collision(defenders[i], this)) {
+                let object = <Defender>defenders[i]
                 this.currentSpeed = 0
                 this.health -= object.damage
                 if(this.health <= 0) {
                     this.delete = true
+                    cells.forEach(function(cell) {
+                        console.log(object.y)
+                        if(cell.y == object.y - 1) {
+                            cell.defenderExist = false
+                        }
+                    })
                 }
             }
         }

@@ -24,13 +24,29 @@ export default class VampireBullet extends Bullet {
         if(this.x < 0) {
             this.delete = true
         }
+        let objects = this.game.objects
+        let cells:Array<Cell> = []
+        let defenders: Array<Defender> = []
+        objects.forEach(function(object) {
+            if(object instanceof Defender) {
+                defenders.push(object)
+            }
+            if(object instanceof Cell) {
+                cells.push(object)
+            }
+        })
 
-        for(let i = 0; i < this.game.objects.length; i++) {
-            let obj = this.game.objects[i]
-            if(obj instanceof Defender && Collision(this, obj))  {
-                obj.health -= this.damage
-                if(obj.health <= 0) {
-                    obj.delete = true
+        for(let i = 0; i < defenders.length; i++) {
+            let object = defenders[i]
+            if(Collision(this, object))  {
+                object.health -= this.damage
+                if(object.health <= 0) {
+                    object.delete = true
+                    cells.forEach(function(cell) {
+                        if(cell.x == object.x - 1 && cell.y == object.y - 1) {
+                            cell.defenderExist = false
+                        }
+                    })
                 }
                 this.delete = true
             }
