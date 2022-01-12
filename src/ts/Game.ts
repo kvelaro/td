@@ -9,6 +9,10 @@ import Invader from "./Invader";
 import Level1 from "./Levels/Level1";
 import Level from "./Level";
 import Wave from "./interfaces/Wave";
+import GameMenuState from "./States/GameMenuState";
+import State from "./State";
+import GamePlayingState from "./States/GamePlayingState";
+import GamePausedState from "./States/GamePausedState";
 
 const STATE_PLAYING = 'PLAYING'
 const STATE_OVER = 'OVER'
@@ -22,7 +26,7 @@ export default class Game {
     private frame: number
     private rows: number
     private cols: number
-    private state: string
+    private state: State
     private level: Level
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
@@ -35,7 +39,8 @@ export default class Game {
 
         this.objects = []
         this.frame = 0
-        this.state = STATE_PLAYING
+        //this.setState(new GameMenuState())
+        this.setState(new GamePlayingState())
         new InputHandler(this)
     }
 
@@ -56,35 +61,73 @@ export default class Game {
     }
 
     public start(): void {
-        this.state = STATE_PLAYING
         this.level = new Level1()
         this.background()
     }
 
     public loop(): void {
 
-        if(this.currentState() == STATE_PLAYING) {
-            this.context().clearRect(0 ,0, this.width, this.height)
-            this.frame++
-            //this.zombies()
-
-            let objects = this.objects
-
-            // let filter = objects.filter(function(invader) {
-            //     return invader instanceof Invader
-            // })
-            for (let i = 0; i < objects.length; i++) {
-                if(objects[i] && objects[i].delete) {
-                    objects.splice(i, 1)
-                    continue
-                }
-                objects[i].draw()
-                objects[i].update()
-            }
+        if (this.currentState() instanceof GameMenuState) {
+            this.menu()
+        } else if (this.currentState() instanceof GamePlayingState) {
+            this.playing()
+        } else if (this.currentState() instanceof GamePausedState) {
+            this.paused()
+        } else {
+            this.over()
         }
     }
 
-    public currentState(): string {
+    public menu(): void {}
+
+    public playing(): void {
+        this.context().clearRect(0 ,0, this.width, this.height)
+        this.frame++
+        //this.zombies()
+
+        let objects = this.objects
+
+        // let filter = objects.filter(function(invader) {
+        //     return invader instanceof Invader
+        // })
+        for (let i = 0; i < objects.length; i++) {
+            if(objects[i] && objects[i].delete) {
+                objects.splice(i, 1)
+                continue
+            }
+            objects[i].draw()
+            objects[i].update()
+        }
+    }
+
+    public paused(): void {
+
+    }
+
+    public over(): void {
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText('GAME OVER', this.width / 2, this.height / 2)
+        this.context().restore()
+    }
+
+    public win(): void {
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText('YOU WON', this.width / 2, this.height / 2)
+        this.context().restore()
+    }
+
+    protected setState(state: State): void {
+        this.state = state
+        this.state.enter()
+    }
+
+    public currentState(): State {
         return this.state
     }
 
@@ -111,25 +154,9 @@ export default class Game {
     //     }
     // }
 
-    public over(): void {
-        this.state = STATE_OVER
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('GAME OVER', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
 
-    public win(): void {
-        this.state = STATE_OVER
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('YOU WON', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
+
+
 
     public currentFrame() {
         return this.frame
