@@ -2,7 +2,6 @@ import Game from "../Game";
 import Cell from "../Cell";
 import zombie from '../../images/zombie2.png'
 import Invader from "../Invader";
-import SoldierBullet from "../Bullets/SoldierBullet";
 import VampireBullet from "../Bullets/VampireBullet";
 import Bullet from "../Bullet";
 import Collision from "../Collision";

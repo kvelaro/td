@@ -6,12 +6,15 @@ const CELL_WIDTH = 100
 const CELL_HEIGHT = 100
 
 export default class Cell extends GameObject {
-    private game: Game
-    private image: HTMLImageElement
     public static width: number = CELL_WIDTH
     public static height: number = CELL_HEIGHT
+
+    private game: Game
+    private image: HTMLImageElement
     private fullyDrawn: boolean = true
+
     public defenderExist: boolean
+
     constructor(game: Game, x: number, y: number) {
         super(x, y)
         this.game = game
@@ -47,5 +50,4 @@ export default class Cell extends GameObject {
     public isFullyDrawn(): boolean {
         return this.fullyDrawn
     }
-
 }

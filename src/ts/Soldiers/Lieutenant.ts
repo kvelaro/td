@@ -3,7 +3,6 @@ import Defender from "../Defender";
 import Cell from "../Cell";
 import irelandSoldier from '../../images/ireland-soldier.png'
 import LieutenantBullet from "../Bullets/LieutenantBullet";
-import SoldierBullet from "../Bullets/SoldierBullet";
 
 const IMAGE_WIDTH = 492
 const IMAGE_HEIGHT = 566

@@ -2,7 +2,6 @@ import Game from "../Game";
 import Defender from "../Defender";
 import Cell from "../Cell";
 import aborigen from '../../images/aborigen.png'
-import SoldierBullet from "../Bullets/SoldierBullet";
 import SergeantBullet from "../Bullets/SergeantBullet";
 
 const IMAGE_WIDTH = 532

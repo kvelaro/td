@@ -11,7 +11,6 @@ import Level from "./Level";
 import Wave from "./interfaces/Wave";
 
 const STATE_PLAYING = 'PLAYING'
-const STATE_PAUSED = 'PAUSED'
 const STATE_OVER = 'OVER'
 
 export default class Game {
@@ -71,9 +70,9 @@ export default class Game {
 
             let objects = this.objects
 
-            let filter = objects.filter(function(invader) {
-                return invader instanceof Invader
-            })
+            // let filter = objects.filter(function(invader) {
+            //     return invader instanceof Invader
+            // })
             objects.forEach(function(object, i) {
                 if(object && object.delete) {
                     objects.splice(i, 1)

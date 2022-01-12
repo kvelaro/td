@@ -3,7 +3,6 @@ import Defender from "../Defender";
 import Cell from "../Cell";
 import angrySheriff from '../../images/angry-sheriff.png'
 import EnsignBullet from "../Bullets/EnsignBullet";
-import SoldierBullet from "../Bullets/SoldierBullet";
 
 const IMAGE_WIDTH = 678
 const IMAGE_HEIGHT = 859

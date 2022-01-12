@@ -1,4 +1,3 @@
-import GameObject from "../GameObject";
 import Game from "../Game";
 import Cell from "../Cell";
 import Bullet from "../Bullet";

@@ -1,5 +1,4 @@
 import GameObject from "./GameObject";
-import Bullet from "./Bullet";
 import Defender from "./Defender";
 import Collision from "./Collision";
 import Game from "./Game";

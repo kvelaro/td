@@ -2,9 +2,7 @@ import Game from "../Game";
 import Defender from "../Defender";
 import Cell from "../Cell";
 import funnyFox  from '../../images/funny-fox.png'
-import LieutenantBullet from "../Bullets/LieutenantBullet";
 import CorporalBullet from "../Bullets/CorporalBullet";
-import SoldierBullet from "../Bullets/SoldierBullet";
 
 const IMAGE_WIDTH = 322
 const IMAGE_HEIGHT = 404

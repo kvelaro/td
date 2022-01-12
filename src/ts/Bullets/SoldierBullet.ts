@@ -1,8 +1,6 @@
 import Game from "../Game";
 import Cell from "../Cell";
 import Bullet from "../Bullet";
-import Invader from "../Invader";
-import Collision from "../Collision";
 
 export default class SoldierBullet extends Bullet {
     constructor(game: Game, x: number, y: number) {
