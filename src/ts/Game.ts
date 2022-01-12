@@ -66,22 +66,21 @@ export default class Game {
         if(this.currentState() == STATE_PLAYING) {
             this.context().clearRect(0 ,0, this.width, this.height)
             this.frame++
-            this.zombies()
+            //this.zombies()
 
             let objects = this.objects
 
             // let filter = objects.filter(function(invader) {
             //     return invader instanceof Invader
             // })
-            objects.forEach(function(object, i) {
-                if(object && object.delete) {
+            for (let i = 0; i < objects.length; i++) {
+                if(objects[i] && objects[i].delete) {
                     objects.splice(i, 1)
+                    continue
                 }
-                else if (object) {
-                    object.draw()
-                    object.update()
-                }
-            })
+                objects[i].draw()
+                objects[i].update()
+            }
         }
     }
 
@@ -103,14 +102,14 @@ export default class Game {
         this.objects.push(new Money(this, this.width - 200, 20))
     }
 
-    private zombies(): void {
-        if(this.frame % 5000 == 0) {
-            this.zombiesWave()
-        }
-        if(this.frame % 100 == 0) {
-            this.objects.push(this.zombie())
-        }
-    }
+    // private zombies(): void {
+    //     if(this.frame % 5000 == 0) {
+    //         this.zombiesWave()
+    //     }
+    //     if(this.frame % 100 == 0) {
+    //         this.objects.push(this.zombie())
+    //     }
+    // }
 
     public over(): void {
         this.state = STATE_OVER

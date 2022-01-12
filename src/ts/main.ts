@@ -14,7 +14,7 @@ function gameLoop() {
     let now = (new Date()).getTime()
     if(now - prev > FPS) {
         prev = now - (prev % FPS)
-        //game.loop()
+        game.loop()
     }
     requestAnimationFrame(gameLoop)
 }

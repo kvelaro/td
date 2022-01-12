@@ -46,7 +46,7 @@ export default abstract class Invader extends GameObject {
                 if(this.health <= 0) {
                     this.delete = true
                     cells.forEach(function(cell) {
-                        console.log(object.y)
+
                         if(cell.y == object.y - 1) {
                             cell.defenderExist = false
                         }
