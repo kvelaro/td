@@ -1,4 +1,3 @@
-
 import Game from "./Game"
 import grassImage from '../images/grass.jpg'
 import GameObject from "./GameObject";
