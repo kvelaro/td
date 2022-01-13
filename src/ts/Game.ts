@@ -35,7 +35,6 @@ export default class Game {
 
         this.objects = []
         this.frame = 0
-        //this.setState(new GameMenuState())
         this.input = new InputHandler(this)
     }
 
@@ -57,11 +56,9 @@ export default class Game {
 
     public start(): void {
         this.setState(new GameMenuState(this))
-        this.level = new Level1()
     }
 
     public loop(): void {
-        console.log(this.state)
         this.state.run()
     }
 
@@ -74,10 +71,10 @@ export default class Game {
         this.context().restore()
     }
 
-    public playing(): void {
+    public playing(level: Level): void {
         this.frame++
         this.context().clearRect(0 ,0, this.width, this.height)
-        //this.zombies()
+        this.zombies()
 
         let objects = this.objects
         for (let i = 0; i < objects.length; i++) {
@@ -140,19 +137,6 @@ export default class Game {
         this.objects.push(new Money(this, this.width - 200, 20))
     }
 
-    // private zombies(): void {
-    //     if(this.frame % 5000 == 0) {
-    //         this.zombiesWave()
-    //     }
-    //     if(this.frame % 100 == 0) {
-    //         this.objects.push(this.zombie())
-    //     }
-    // }
-
-
-
-
-
     public currentFrame() {
         return this.frame
     }
@@ -185,6 +169,15 @@ export default class Game {
             this.win()
         }
         for(let i = 0; i < waveObj.zombieCount; i++) {
+            this.objects.push(this.zombie())
+        }
+    }
+
+    private zombies(): void {
+        if(this.frame % 5000 == 0) {
+            this.zombiesWave()
+        }
+        if(this.frame % 100 == 0) {
             this.objects.push(this.zombie())
         }
     }
