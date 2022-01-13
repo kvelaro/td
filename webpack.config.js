@@ -62,8 +62,7 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        
-        
+
         config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
         
     } else {

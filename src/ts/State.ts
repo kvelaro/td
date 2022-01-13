@@ -1,6 +1,6 @@
-export default class State {
+export default abstract class State {
 
     public enter() {}
 
-    public handleInput() {}
+    abstract handleInput(event: Event): void
 }

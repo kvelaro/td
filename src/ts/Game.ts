@@ -9,10 +9,8 @@ import Invader from "./Invader";
 import Level1 from "./Levels/Level1";
 import Level from "./Level";
 import Wave from "./interfaces/Wave";
+import GameState from "./States/GameState";
 import GameMenuState from "./States/GameMenuState";
-import State from "./State";
-import GamePlayingState from "./States/GamePlayingState";
-import GamePausedState from "./States/GamePausedState";
 
 export default class Game {
     private gameCanvasElement: HTMLCanvasElement
@@ -23,7 +21,8 @@ export default class Game {
     private frame: number
     private rows: number
     private cols: number
-    private state: State
+    private state: GameState
+    protected input: InputHandler
     private level: Level
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
@@ -37,8 +36,7 @@ export default class Game {
         this.objects = []
         this.frame = 0
         //this.setState(new GameMenuState())
-        this.setState(new GamePlayingState())
-        new InputHandler(this)
+        this.input = new InputHandler(this)
     }
 
     public canvas(): HTMLCanvasElement {
@@ -58,25 +56,23 @@ export default class Game {
     }
 
     public start(): void {
+        this.setState(new GameMenuState(this))
         this.level = new Level1()
-        this.background()
     }
 
     public loop(): void {
-
-        if (this.currentState() instanceof GameMenuState) {
-            this.menu()
-        } else if (this.currentState() instanceof GamePlayingState) {
-            this.playing()
-        } else if (this.currentState() instanceof GamePausedState) {
-            this.paused()
-        } else {
-            this.over()
-        }
-        this.currentState().handleInput()
+        console.log(this.state)
+        this.state.run()
     }
 
-    public menu(): void {}
+    public menu(): void {
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText('PRESS SPACE TO START GAME', this.width / 2, this.height / 2)
+        this.context().restore()
+    }
 
     public playing(): void {
         this.frame++
@@ -95,7 +91,12 @@ export default class Game {
     }
 
     public paused(): void {
-
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText('PAUSED', this.width / 2, this.height / 2)
+        this.context().restore()
     }
 
     public over(): void {
@@ -116,16 +117,16 @@ export default class Game {
         this.context().restore()
     }
 
-    protected setState(state: State): void {
+    public setState(state: GameState): void {
         this.state = state
         this.state.enter()
     }
 
-    public currentState(): State {
+    public currentState(): GameState {
         return this.state
     }
 
-    private background(): void {
+    public background(): void {
         let cellWidth = Cell.width
         let cellHeight = Cell.height
 
