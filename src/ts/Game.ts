@@ -14,9 +14,6 @@ import State from "./State";
 import GamePlayingState from "./States/GamePlayingState";
 import GamePausedState from "./States/GamePausedState";
 
-const STATE_PLAYING = 'PLAYING'
-const STATE_OVER = 'OVER'
-
 export default class Game {
     private gameCanvasElement: HTMLCanvasElement
     private ctx: CanvasRenderingContext2D
@@ -76,20 +73,17 @@ export default class Game {
         } else {
             this.over()
         }
+        this.currentState().handleInput()
     }
 
     public menu(): void {}
 
     public playing(): void {
-        this.context().clearRect(0 ,0, this.width, this.height)
         this.frame++
+        this.context().clearRect(0 ,0, this.width, this.height)
         //this.zombies()
 
         let objects = this.objects
-
-        // let filter = objects.filter(function(invader) {
-        //     return invader instanceof Invader
-        // })
         for (let i = 0; i < objects.length; i++) {
             if(objects[i] && objects[i].delete) {
                 objects.splice(i, 1)
@@ -118,7 +112,7 @@ export default class Game {
         this.context().fillStyle = "#000"
         this.context().font = "50px Arial"
         this.context().textAlign = 'center'
-        this.context().fillText('YOU WON', this.width / 2, this.height / 2)
+        this.context().fillText('YOU WIN', this.width / 2, this.height / 2)
         this.context().restore()
     }
 
