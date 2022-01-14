@@ -6,7 +6,6 @@ import SimpleZombie from "./Enemies/SimpleZombie";
 import SoldierZombie from "./Enemies/SoldierZombie";
 import VampireZombie from "./Enemies/VampireZombie";
 import Invader from "./Invader";
-import Level1 from "./Levels/Level1";
 import Level from "./Level";
 import Wave from "./interfaces/Wave";
 import GameState from "./States/GameState";
@@ -23,7 +22,6 @@ export default class Game {
     private cols: number
     private state: GameState
     protected input: InputHandler
-    private level: Level
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -74,7 +72,7 @@ export default class Game {
     public playing(level: Level): void {
         this.frame++
         this.context().clearRect(0 ,0, this.width, this.height)
-        this.zombies()
+        this.zombies(level)
 
         let objects = this.objects
         for (let i = 0; i < objects.length; i++) {
@@ -163,8 +161,8 @@ export default class Game {
         return zombie
     }
 
-    public zombiesWave(): void {
-        let waveObj = <Wave>this.level.next()
+    public zombiesWave(level: Level): void {
+        let waveObj = <Wave>level.next()
         if(!waveObj) {
             this.win()
         }
@@ -173,11 +171,13 @@ export default class Game {
         }
     }
 
-    private zombies(): void {
-        if(this.frame % 5000 == 0) {
-            this.zombiesWave()
+    private zombies(level: Level): void {
+        let bigWaveAtFrame = Math.floor(5000 - (level.number - 1) * 250)
+        let randomZombieAtFrame = Math.floor(100 - (level.number) * 10)
+        if(this.frame % bigWaveAtFrame == 0) {
+            this.zombiesWave(level)
         }
-        if(this.frame % 100 == 0) {
+        if(this.frame % randomZombieAtFrame == 0) {
             this.objects.push(this.zombie())
         }
     }

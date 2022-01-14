@@ -4,6 +4,8 @@ export default class Level {
     protected waves: Array<Wave>
     protected currentWave: number
 
+    public number: number
+
     public next(): object {
         return this.waves[this.currentWave++]
     }
