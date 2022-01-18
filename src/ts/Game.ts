@@ -78,24 +78,22 @@ export default class Game {
         this.context().clearRect(0 ,0, this.width, this.height)
         this.zombies()
 
+        let objects = this.objects
         if(this.isAboutToComplete) {
-            let objects = this.objects
             let filter = objects.filter(function (object: GameObject) {
                 return (object instanceof Invader)
             })
             if(!filter) {
                 this.setState(new GameCompleteLevelState(this))
             }
-            else {
-                for (let i = 0; i < objects.length; i++) {
-                    if(objects[i] && objects[i].delete) {
-                        objects.splice(i, 1)
-                        continue
-                    }
-                    objects[i].draw()
-                    objects[i].update()
-                }
+        }
+        for (let i = 0; i < objects.length; i++) {
+            if(objects[i] && objects[i].delete) {
+                objects.splice(i, 1)
+                continue
             }
+            objects[i].draw()
+            objects[i].update()
         }
     }
 
