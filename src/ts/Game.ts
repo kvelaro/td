@@ -10,6 +10,7 @@ import Level from "./Level";
 import Wave from "./interfaces/Wave";
 import GameState from "./States/GameState";
 import GameMenuState from "./States/GameMenuState";
+import GameCompleteLevelState from "./States/GameCompleteLevelState";
 
 export default class Game {
     private gameCanvasElement: HTMLCanvasElement
@@ -22,6 +23,8 @@ export default class Game {
     private cols: number
     private state: GameState
     protected input: InputHandler
+    public level: Level
+    public isAboutToComplete: boolean
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -57,6 +60,7 @@ export default class Game {
     }
 
     public loop(): void {
+        this.frame++
         this.state.run()
     }
 
@@ -70,18 +74,28 @@ export default class Game {
     }
 
     public playing(level: Level): void {
-        this.frame++
+        this.level = level
         this.context().clearRect(0 ,0, this.width, this.height)
-        this.zombies(level)
+        this.zombies()
 
-        let objects = this.objects
-        for (let i = 0; i < objects.length; i++) {
-            if(objects[i] && objects[i].delete) {
-                objects.splice(i, 1)
-                continue
+        if(this.isAboutToComplete) {
+            let objects = this.objects
+            let filter = objects.filter(function (object: GameObject) {
+                return (object instanceof Invader)
+            })
+            if(!filter) {
+                this.setState(new GameCompleteLevelState(this))
             }
-            objects[i].draw()
-            objects[i].update()
+            else {
+                for (let i = 0; i < objects.length; i++) {
+                    if(objects[i] && objects[i].delete) {
+                        objects.splice(i, 1)
+                        continue
+                    }
+                    objects[i].draw()
+                    objects[i].update()
+                }
+            }
         }
     }
 
@@ -161,24 +175,29 @@ export default class Game {
         return zombie
     }
 
-    public zombiesWave(level: Level): void {
-        let waveObj = <Wave>level.next()
-        if(!waveObj) {
-            this.win()
+    public zombiesWave(): void {
+        let wavesExist = this.level.wavesExist()
+        if(!wavesExist) {
+            this.isAboutToComplete = true
         }
-        for(let i = 0; i < waveObj.zombieCount; i++) {
-            this.objects.push(this.zombie())
+        else {
+            let waveObj = <Wave>this.level.next()
+            for(let i = 0; i < waveObj.zombieCount; i++) {
+                this.objects.push(this.zombie())
+            }
         }
     }
 
-    private zombies(level: Level): void {
-        let bigWaveAtFrame = Math.floor(5000 - (level.number - 1) * 250)
-        let randomZombieAtFrame = Math.floor(100 - (level.number) * 10)
-        if(this.frame % bigWaveAtFrame == 0) {
-            this.zombiesWave(level)
-        }
-        if(this.frame % randomZombieAtFrame == 0) {
-            this.objects.push(this.zombie())
+    private zombies(): void {
+        let bigWaveAtFrame = Math.floor(5000 - (this.level.levelNo - 1) * 250)
+        let randomZombieAtFrame = Math.floor(100 - (this.level.levelNo) * 10)
+        if(!this.isAboutToComplete) {
+            if(this.frame % bigWaveAtFrame == 0) {
+                this.zombiesWave()
+            }
+            if(this.frame % randomZombieAtFrame == 0) {
+                this.objects.push(this.zombie())
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ export default class Level {
     protected waves: Array<Wave>
     protected currentWave: number
 
-    public number: number
+    public levelNo: number
 
     public next(): object {
         return this.waves[this.currentWave++]
@@ -12,5 +12,9 @@ export default class Level {
 
     public current(): number {
         return this.currentWave
+    }
+
+    public wavesExist(): boolean {
+        return this.waves.length > this.currentWave + 1
     }
 }

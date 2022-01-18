@@ -11,13 +11,15 @@ import Lieutenant from "../Soldiers/Lieutenant";
 import Corporal from "../Soldiers/Corporal";
 import GamePausedState from "./GamePausedState";
 import GameState from "./GameState";
-import Level1 from "../Levels/Level1";
+import Level from "../Level";
 
 export default class GamePlayingState extends GameState {
     protected game: Game
-    constructor(game: Game) {
+    protected level: Level
+    constructor(game: Game, level: Level) {
         super()
         this.game = game
+        this.level = level
     }
 
     enter() {
@@ -26,7 +28,7 @@ export default class GamePlayingState extends GameState {
     }
 
     public run(): void {
-        this.game.playing(new Level1())
+        this.game.playing(this.level)
     }
 
     handleInput(event: Event): void {
@@ -38,7 +40,7 @@ export default class GamePlayingState extends GameState {
             }
         }
         else if(event instanceof MouseEvent) {
-            this.game.canvas().addEventListener('click', (e: MouseEvent) => {
+            this.game.canvas().addEventListener('click', (e: MouseEvent) => {console.log(e)
                 let canvasRect = this.game.canvas().getBoundingClientRect()
                 let x = e.x - canvasRect.left
                 let y = e.y - canvasRect.top

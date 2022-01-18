@@ -1,6 +1,7 @@
 import Game from "../Game";
 import GameState from "./GameState";
 import GamePlayingState from "./GamePlayingState";
+import Level1 from "../Levels/Level1";
 
 export default class GameMenuState extends GameState {
     protected game: Game
@@ -11,7 +12,8 @@ export default class GameMenuState extends GameState {
 
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Space' && event.type == 'keydown') {
-            this.game.setState(new GamePlayingState(this.game))
+            this.game.isAboutToComplete = false
+            this.game.setState(new GamePlayingState(this.game, new Level1()))
         }
     }
 

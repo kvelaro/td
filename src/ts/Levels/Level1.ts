@@ -15,6 +15,6 @@ export default class Level1 extends Level {
             }
         ]
         this.currentWave = 0
-        this.number = 1
+        this.levelNo = 1
     }
 }
