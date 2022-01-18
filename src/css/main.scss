@@ -17,6 +17,10 @@ html, body {
   display: flex;
   position: absolute;
   padding: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 350px;
 
   &__item {
     display: flex;
