@@ -22,7 +22,7 @@ export default class SoldierZombie extends Invader {
         ctx.font = '12px Arial'
         ctx.fillText(`Soldier zombie ${this.health}`, this.x, this.y, this.width)
         ctx.restore()
-
+        ctx.strokeRect(this.x, this.y, this.w(), this.h())
         ctx.drawImage(this.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, this.x, this.y, this.w(), this.h())
     }
 }
