@@ -1,7 +1,7 @@
 import Game from "../Game";
 import Defender from "../Defender";
 import Cell from "../Cell";
-import angrySheriff from '../../images/angry-sheriff.png'
+import soldierImage from '../../images/boy-with-stick.png'
 import EnsignBullet from "../Bullets/EnsignBullet";
 
 const IMAGE_WIDTH = 678
@@ -14,7 +14,7 @@ export default class Ensign extends Defender {
         this.width = Cell.width - 2
         this.height = Cell.height - 2
         this.image = new Image(this.width, this.height)
-        this.image.src = angrySheriff
+        this.image.src = soldierImage
     }
 
     draw(): void {

@@ -16,7 +16,7 @@ export default class GamePausedState extends GameState {
 
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Escape' && event.type == 'keydown') {
-            this.game.setState(new GamePlayingState(this.game))
+            this.game.setState(new GamePlayingState(this.game, this.game.level))
         }
     }
 
