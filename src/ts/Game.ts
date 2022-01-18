@@ -141,7 +141,7 @@ export default class Game {
         this.cols = Math.floor(this.w() / cellWidth)
         for (let i = 0; i <= this.rows; i++ ) {
             for (let j = 0; j <= this.cols; j++ ) {
-                this.objects.push(new Cell(this, j * cellWidth, i * cellHeight))
+                this.objects.push(new Cell(this, i, j))
             }
         }
         this.objects.push(new Money(this, this.width - 200, 20))

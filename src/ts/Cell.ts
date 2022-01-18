@@ -13,11 +13,16 @@ export default class Cell extends GameObject {
     private image: HTMLImageElement
     private fullyDrawn: boolean = true
 
+    protected row: number
+    protected col: number
+
     public defenderExist: boolean
 
-    constructor(game: Game, x: number, y: number) {
-        super(x, y)
+    constructor(game: Game, row: number, col: number) {
+        super( col * CELL_WIDTH, row * CELL_HEIGHT)
         this.game = game
+        this.row = row
+        this.col = col
         this.image = new Image()
         this.image.src = grassImage
         if(this.x + Cell.width > this.game.w() || this.y + Cell.height > this.game.h()) {
