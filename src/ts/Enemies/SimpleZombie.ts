@@ -2,8 +2,8 @@ import Game from "../Game";
 import zombie from '../../images/zombie1.png'
 import Invader from "../Invader";
 
-const IMAGE_WIDTH = 600
-const IMAGE_HEIGHT = 500
+const IMAGE_WIDTH = 288
+const IMAGE_HEIGHT = 382
 
 export default class SimpleZombie extends Invader {
     constructor(game: Game, x: number, y: number) {

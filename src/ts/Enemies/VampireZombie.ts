@@ -7,8 +7,8 @@ import Bullet from "../Bullet";
 import Collision from "../Collision";
 import Defender from "../Defender";
 
-const IMAGE_WIDTH = 600
-const IMAGE_HEIGHT = 500
+const IMAGE_WIDTH = 330
+const IMAGE_HEIGHT = 352
 
 export default class VampireZombie extends Invader {
     protected timer: number
