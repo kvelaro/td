@@ -10,6 +10,11 @@ export default class GameMenuState extends GameState {
         this.game = game
     }
 
+    enter() {
+        super.enter()
+        this.game.background()
+    }
+
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Space' && event.type == 'keydown') {
             this.game.isAboutToComplete = false

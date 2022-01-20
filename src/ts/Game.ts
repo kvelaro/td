@@ -65,6 +65,16 @@ export default class Game {
     }
 
     public menu(): void {
+        let objects = this.objects
+        for (let i = 0; i < objects.length; i++) {
+            if(objects[i] && objects[i].delete) {
+                objects.splice(i, 1)
+                continue
+            }
+            objects[i].draw()
+            objects[i].update()
+        }
+
         this.context().save()
         this.context().fillStyle = "#000"
         this.context().font = "50px Arial"
