@@ -8,6 +8,10 @@ export default abstract class GameState extends State {
     public constructor(game: Game) {
         super()
         this.game = game
+    }
+
+    public enter() {
+        super.enter()
         this.game.objects = []
     }
 

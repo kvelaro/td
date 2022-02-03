@@ -11,6 +11,7 @@ import Wave from "./interfaces/Wave";
 import GameState from "./States/GameState";
 import GameMenuState from "./States/GameMenuState";
 import GameCompleteLevelState from "./States/GameCompleteLevelState";
+import GamePlayingState from "./States/GamePlayingState";
 
 export default class Game {
     private gameCanvasElement: HTMLCanvasElement
@@ -25,6 +26,7 @@ export default class Game {
     protected input: InputHandler
     public level: Level
     public isAboutToComplete: boolean
+    public playingStateAfterPause: GamePlayingState
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -37,6 +39,7 @@ export default class Game {
         this.objects = []
         this.frame = 0
         this.input = new InputHandler(this)
+        this.playingStateAfterPause = null
     }
 
     public canvas(): HTMLCanvasElement {
@@ -88,7 +91,7 @@ export default class Game {
         this.context().clearRect(0 ,0, this.width, this.height)
         this.zombies()
         let objects = this.objects
-        console.log(objects)
+        //console.log(objects)
         if(this.isAboutToComplete) {
             let filter = objects.filter(function (object: GameObject) {
                 return (object instanceof Invader)
@@ -134,7 +137,7 @@ export default class Game {
         this.context().restore()
     }
 
-    public setState(state: GameState): void {
+    public setState(state: GameState): void {console.log(state)
         this.state = state
         this.state.enter()
     }

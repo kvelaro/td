@@ -15,14 +15,18 @@ import Level from "../Level";
 
 export default class GamePlayingState extends GameState {
     protected level: Level
+    protected wasPaused: boolean
     constructor(game: Game, level: Level) {
         super(game)
         this.level = level
+        this.wasPaused = false
     }
 
     enter() {
-        super.enter()
-        this.game.background()
+        if(!this.wasPaused) {
+            super.enter()
+            this.game.background()
+        }
     }
 
     public run(): void {
@@ -33,6 +37,8 @@ export default class GamePlayingState extends GameState {
         if(event instanceof KeyboardEvent && event.type == 'keydown') {
             switch (event.code) {
                 case 'Escape':
+                    this.game.playingStateAfterPause = this
+                    this.wasPaused = true
                     this.game.setState(new GamePausedState(this.game))
                     break
             }
