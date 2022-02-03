@@ -16,7 +16,7 @@ export default class VampireBullet extends Bullet {
 
     draw() {
         this.game.context().fillStyle = '#fff'
-        this.game.context().fillRect(this.x + Cell.width, this.y + Cell.height / 2, this.width, this.height)
+        this.game.context().fillRect(this.x, this.y + Cell.height / 2, this.width, this.height)
     }
 
     public update() {

@@ -33,7 +33,7 @@ export default class VampireZombie extends Invader {
         ctx.drawImage(this.image, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, this.x, this.y, this.w(), this.h())
 
         if(this.timer++ % 150 == 0) {
-            this.bullets.push(new VampireBullet(this.game, this.x - Cell.width, this.y))
+            this.bullets.push(new VampireBullet(this.game, this.x, this.y))
         }
         this.bullets.forEach(function(bullet) {
             bullet.draw()
