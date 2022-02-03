@@ -87,8 +87,8 @@ export default class Game {
         this.level = level
         this.context().clearRect(0 ,0, this.width, this.height)
         this.zombies()
-
         let objects = this.objects
+        console.log(objects)
         if(this.isAboutToComplete) {
             let filter = objects.filter(function (object: GameObject) {
                 return (object instanceof Invader)

@@ -14,11 +14,9 @@ import GameState from "./GameState";
 import Level from "../Level";
 
 export default class GamePlayingState extends GameState {
-    protected game: Game
     protected level: Level
     constructor(game: Game, level: Level) {
-        super()
-        this.game = game
+        super(game)
         this.level = level
     }
 

@@ -3,10 +3,8 @@ import GamePlayingState from "./GamePlayingState";
 import GameState from "./GameState";
 
 export default class GameCompleteLevelState extends GameState {
-    protected game: Game
     constructor(game: Game) {
-        super()
-        this.game = game
+        super(game)
     }
 
     enter() {

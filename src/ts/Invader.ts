@@ -3,6 +3,7 @@ import Defender from "./Defender";
 import Collision from "./Collision";
 import Game from "./Game";
 import Cell from "./Cell";
+import GameOverState from "./States/GameOverState";
 
 export default abstract class Invader extends GameObject {
     protected game: Game
@@ -56,7 +57,7 @@ export default abstract class Invader extends GameObject {
         }
         this.x += this.currentSpeed * -1
         if(this.x <= -100) {
-             this.game.over()
+             this.game.setState(new GameOverState(this.game))
         }
     }
 }

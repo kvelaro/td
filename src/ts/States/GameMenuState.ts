@@ -4,10 +4,8 @@ import GamePlayingState from "./GamePlayingState";
 import Level1 from "../Levels/Level1";
 
 export default class GameMenuState extends GameState {
-    protected game: Game
     constructor(game: Game) {
-        super()
-        this.game = game
+        super(game)
     }
 
     enter() {
