@@ -44,7 +44,7 @@ export default class GamePlayingState extends GameState {
             }
         }
         else if(event instanceof MouseEvent) {
-            this.game.canvas().addEventListener('click', (e: MouseEvent) => {console.log(e)
+            this.game.canvas().addEventListener('click', (e: MouseEvent) => {
                 let canvasRect = this.game.canvas().getBoundingClientRect()
                 let x = e.x - canvasRect.left
                 let y = e.y - canvasRect.top

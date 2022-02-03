@@ -137,7 +137,7 @@ export default class Game {
         this.context().restore()
     }
 
-    public setState(state: GameState): void {console.log(state)
+    public setState(state: GameState): void {
         this.state = state
         this.state.enter()
     }
