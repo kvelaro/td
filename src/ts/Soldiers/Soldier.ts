@@ -14,6 +14,7 @@ export default class Soldier extends Defender {
     private speed: number
     private currentSpeed: number
     private initialXPosition: number
+    protected static price: number = 400
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.initialXPosition = this.x

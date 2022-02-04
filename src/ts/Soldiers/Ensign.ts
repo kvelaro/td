@@ -8,6 +8,7 @@ const IMAGE_WIDTH = 678
 const IMAGE_HEIGHT = 859
 
 export default class Ensign extends Defender {
+    protected static price: number = 200
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.game = game

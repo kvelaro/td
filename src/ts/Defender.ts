@@ -13,6 +13,7 @@ export default abstract class Defender extends GameObject {
     protected timer: number
     protected bullets: Array<Bullet>
     protected shooting: boolean
+    protected static price: number
 
     constructor(game: Game, x: number, y: number) {
         super(x, y)
@@ -22,6 +23,10 @@ export default abstract class Defender extends GameObject {
         this.timer = 0
         this.damage = 0
         this.shooting = false
+    }
+
+    public static getPrice() {
+        return this.price
     }
 
     draw() {
