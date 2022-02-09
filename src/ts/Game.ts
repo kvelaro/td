@@ -63,6 +63,7 @@ export default class Game {
     }
 
     public loop(): void {
+        console.log(this.frame)
         this.frame++
         this.state.run()
     }
