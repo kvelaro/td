@@ -8,7 +8,9 @@ const IMAGE_WIDTH = 492
 const IMAGE_HEIGHT = 566
 
 export default class Lieutenant extends Defender {
-    protected static price: number = 300
+    public static title: string = 'Lieutenant'
+    public static link: string = irelandSoldier
+    public static price: number = 300
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.game = game

@@ -12,20 +12,25 @@ import Corporal from "../Soldiers/Corporal";
 import GamePausedState from "./GamePausedState";
 import GameState from "./GameState";
 import Level from "../Level";
+import DefendersMenu from "../Menu/DefendersMenu";
 
 export default class GamePlayingState extends GameState {
     protected level: Level
     protected wasPaused: boolean
+    protected defendersMenu: DefendersMenu
+    // protected currentDefenderSelected
     constructor(game: Game, level: Level) {
         super(game)
         this.level = level
         this.wasPaused = false
+        this.defendersMenu = new DefendersMenu()
     }
 
     enter() {
         if(!this.wasPaused) {
             super.enter()
             this.game.background()
+            this.defendersMenu.draw()
         }
     }
 
@@ -34,6 +39,7 @@ export default class GamePlayingState extends GameState {
     }
 
     handleInput(event: Event): void {
+        let href = this
         if(event instanceof KeyboardEvent && event.type == 'keydown') {
             switch (event.code) {
                 case 'Escape':
@@ -44,6 +50,11 @@ export default class GamePlayingState extends GameState {
             }
         }
         else if(event instanceof MouseEvent) {
+
+            this.defendersMenu.addEventListener('menu-selected', function(e) {
+                href.defendersMenu.setItemActive(e)
+            })
+
             this.game.canvas().addEventListener('click', (e: MouseEvent) => {
                 let canvasRect = this.game.canvas().getBoundingClientRect()
                 let x = e.x - canvasRect.left
@@ -115,18 +126,10 @@ export default class GamePlayingState extends GameState {
                 })
             })
 
-            let menuItems = document.querySelectorAll('.menu__item')
+            let menuItems = document.querySelectorAll('.menu__items-item')
             for(let i = 0; i < menuItems.length; i++) {
                 menuItems[i].addEventListener('click', function (e) {
-                    let el = <HTMLElement>e.currentTarget
-                    if(el.classList.contains('menu__item--selected')) {
-                        el.classList.remove('menu__item--selected')
-                        return
-                    }
-                    for(let j = 0; j < menuItems.length; j++) {
-                        menuItems[j].classList.remove('menu__item--selected')
-                    }
-                    el.classList.add('menu__item--selected')
+                    href.defendersMenu.dispatchEvent(e)
                 })
             }
         }

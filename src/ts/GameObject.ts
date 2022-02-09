@@ -1,4 +1,6 @@
-export default abstract class GameObject {
+import Drawable from "./interfaces/Drawable";
+
+export default abstract class GameObject implements Drawable {
     public x: number
     public y: number
     protected width: number
@@ -11,6 +13,13 @@ export default abstract class GameObject {
         this.delete = false
     }
 
+    draw(): void {
+
+    }
+    update(): void {
+
+    }
+
     public w(): number {
         return this.width
     }
@@ -19,10 +28,5 @@ export default abstract class GameObject {
         return this.height
     }
 
-    draw(): void {
-    }
 
-    update(): void {
-
-    }
 }

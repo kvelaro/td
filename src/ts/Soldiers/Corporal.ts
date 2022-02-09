@@ -4,11 +4,14 @@ import Cell from "../Cell";
 import funnyFox  from '../../images/funny-fox.png'
 import CorporalBullet from "../Bullets/CorporalBullet";
 
+
 const IMAGE_WIDTH = 322
 const IMAGE_HEIGHT = 404
 
 export default class Corporal extends Defender {
-    protected static price: number = 500
+    public static title: string = 'Corporal'
+    public static link: string = funnyFox
+    public static price: number = 500
     constructor(game: Game, x: number, y: number) {
         super(game, x, y)
         this.game = game

@@ -50,6 +50,11 @@ const config = {
                 type: 'asset/resource'
             },
 
+            {
+                test: /\.handlebars$/,
+                loader: "handlebars-loader"
+            }
+
             // Add your rules for custom modules here
             // Learn more about loaders from https://webpack.js.org/loaders/
         ],
