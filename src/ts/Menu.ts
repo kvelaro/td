@@ -38,4 +38,8 @@ export default class Menu implements EventTarget, Drawable {
     public update(): void {
 
     }
+
+    public delete(): void {
+
+    }
 }
