@@ -50,36 +50,19 @@ export default class GamePlayingState extends GameState {
             }
         }
         else if(event instanceof MouseEvent) {
-
-            this.defendersMenu.addEventListener('menu-selected', function(e) {
-                href.defendersMenu.setItemActive(e)
-            })
-
             this.game.canvas().addEventListener('click', (e: MouseEvent) => {
                 let canvasRect = this.game.canvas().getBoundingClientRect()
                 let x = e.x - canvasRect.left
                 let y = e.y - canvasRect.top
 
-                let filter = this.game.objects.filter(function(object) {
-                    return object instanceof Money
-                })
-
-                if(!filter) {
-                    return
-                }
-                let moneyObject = <Money>filter.pop()
-
-                let selected = document.querySelector('.menu__item--selected')
+                let selected = this.defendersMenu.getActiveDefenderClass()
                 if(!selected) {
-                    return
-                }
-                let cost = <number><unknown>selected.getAttribute('data-cost')
-                if(cost > moneyObject.getAmount()) {
                     return
                 }
 
                 let cellObjects:Array<Cell> = []
                 let defenderObjects:Array<Defender> = []
+                let moneyObject: Money
 
                 this.game.objects.forEach(function(object) {
                     if(object instanceof Cell) {
@@ -88,9 +71,11 @@ export default class GamePlayingState extends GameState {
                     if(object instanceof Defender) {
                         defenderObjects.push(object)
                     }
+                    if(object instanceof Money) {
+                        moneyObject = object
+                    }
                 })
 
-                let dataClass = selected.getAttribute('data-class')
                 cellObjects.forEach(function(object) {
                     if(
                         Collision(object, new Pixel(x, y)) &&
@@ -99,39 +84,43 @@ export default class GamePlayingState extends GameState {
                     ) {
 
                         let defender = null
-                        switch (dataClass) {
+                        let price = 0
+                        switch (selected.toLowerCase()) {
                             case 'soldier':
-                                defender = new Soldier(this.game, object.x + 1, object.y + 1)
+                                defender = new Soldier(href.game, object.x + 1, object.y + 1)
+                                price = Soldier.price
                                 break;
                             case 'sergeant':
-                                defender = new Sergeant(this.game, object.x + 1, object.y + 1)
+                                defender = new Sergeant(href.game, object.x + 1, object.y + 1)
+                                price = Sergeant.price
                                 break;
                             case 'ensign':
-                                defender = new Ensign(this.game, object.x + 1, object.y + 1)
+                                defender = new Ensign(href.game, object.x + 1, object.y + 1)
+                                price = Ensign.price
                                 break;
                             case 'lieutenant':
-                                defender = new Lieutenant(this.game, object.x + 1, object.y + 1)
+                                defender = new Lieutenant(href.game, object.x + 1, object.y + 1)
+                                price = Lieutenant.price
                                 break;
                             case 'corporal':
-                                defender = new Corporal(this.game, object.x + 1, object.y + 1)
+                                defender = new Corporal(href.game, object.x + 1, object.y + 1)
+                                price = Corporal.price
                                 break;
                             default:
                                 break;
                         }
 
-                        moneyObject.addAmount(cost * -1)
-                        object.defenderExist = true
-                        this.game.objects.push(defender)
+                        if(defender) {
+                            if(moneyObject.getAmount() < price) {
+                                return
+                            }
+                            moneyObject.addAmount(price * -1)
+                            object.defenderExist = true
+                            href.game.objects.push(defender)
+                        }
                     }
                 })
             })
-
-            let menuItems = document.querySelectorAll('.menu__items-item')
-            for(let i = 0; i < menuItems.length; i++) {
-                menuItems[i].addEventListener('click', function (e) {
-                    href.defendersMenu.dispatchEvent(e)
-                })
-            }
         }
     }
 }

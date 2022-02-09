@@ -6,8 +6,14 @@ import Lieutenant from "../Soldiers/Lieutenant";
 import Corporal from "../Soldiers/Corporal";
 
 export default class DefendersMenu extends Menu {
+    protected activeDefenderClass: string
     constructor() {
         super()
+        let href = this
+        this.activeDefenderClass = null
+        this.addEventListener('menu-selected', function(e: CustomEvent) {
+            href.setItemActive(e)
+        })
     }
 
     private defenders() {
@@ -42,7 +48,7 @@ export default class DefendersMenu extends Menu {
 
     draw() {
         super.draw()
-
+        let href = this
         let defendersMenuTemplate = require("../../views/menu/defenders-menu.handlebars")
 
         let body = document.querySelector('body')
@@ -53,19 +59,30 @@ export default class DefendersMenu extends Menu {
             menuItems: this.defenders()
         })
         body.prepend(menuSection)
-
+        let menuItems = document.querySelectorAll('.menu__items-item')
+        for(let i = 0; i < menuItems.length; i++) {
+            menuItems[i].addEventListener('click', function (e) {
+                href.dispatchEvent(new CustomEvent('menu-selected', {detail: e.currentTarget}))
+            })
+        }
     }
 
-    public setItemActive(e: Event) {
-        console.log(e)
-        // let el = <HTMLElement>e.currentTarget
-        // if(el.classList.contains('menu__items-item--selected')) {
-        //     el.classList.remove('menu__items-item--selected')
-        //     return
-        // }
-        // for(let j = 0; j < menuItems.length; j++) {
-        //     menuItems[j].classList.remove('menu__items-item--selected')
-        // }
-        // el.classList.add('menu__items-item--selected')
+    public setItemActive(e: CustomEvent) {
+        let el = <HTMLElement>e.detail
+        if(el.classList.contains('menu__items-item--selected')) {
+            this.activeDefenderClass = null
+            el.classList.remove('menu__items-item--selected')
+            return
+        }
+        let menuItems = document.querySelectorAll('.menu__items-item')
+        for(let j = 0; j < menuItems.length; j++) {
+            menuItems[j].classList.remove('menu__items-item--selected')
+        }
+        this.activeDefenderClass = el.dataset.class
+        el.classList.add('menu__items-item--selected')
+    }
+
+    public getActiveDefenderClass() {
+        return this.activeDefenderClass
     }
 }
