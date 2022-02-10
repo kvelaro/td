@@ -23,7 +23,7 @@ export default class GamePlayingState extends GameState {
         super(game)
         this.level = level
         this.wasPaused = false
-        this.defendersMenu = new DefendersMenu()
+        this.defendersMenu = new DefendersMenu(this)
     }
 
     enter() {

@@ -4,13 +4,16 @@ import Sergeant from "../Soldiers/Sergeant";
 import Ensign from "../Soldiers/Ensign";
 import Lieutenant from "../Soldiers/Lieutenant";
 import Corporal from "../Soldiers/Corporal";
+import GameState from "../States/GameState";
 
 export default class DefendersMenu extends Menu {
     protected activeDefenderClass: string
-    constructor() {
+    protected gameState: GameState
+    constructor(gameState: GameState) {
         super()
         let href = this
         this.activeDefenderClass = null
+        this.gameState = gameState
         this.addEventListener('menu-selected', function(e: CustomEvent) {
             href.setItemActive(e)
         })
@@ -58,6 +61,17 @@ export default class DefendersMenu extends Menu {
         menuSection.innerHTML = defendersMenuTemplate({
             menuItems: this.defenders()
         })
+
+        menuSection.addEventListener('mouseover', function() {
+            menuSection.classList.remove('fade-out')
+            menuSection.classList.add('fade-in')
+        })
+
+        menuSection.addEventListener('mouseout', function(e) {console.log(e.currentTarget)
+            menuSection.classList.remove('fade-in')
+            menuSection.classList.add('fade-out')
+        })
+
         body.prepend(menuSection)
         let menuItems = document.querySelectorAll('.menu__items-item')
         for(let i = 0; i < menuItems.length; i++) {
@@ -86,7 +100,7 @@ export default class DefendersMenu extends Menu {
         return this.activeDefenderClass
     }
 
-    public delete() {
+    public static delete() {
         let menuEl = document.querySelector('section.menu')
         menuEl.parentElement.removeChild(menuEl)
     }

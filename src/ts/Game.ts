@@ -65,7 +65,6 @@ export default class Game {
     public loop(): void {
         this.frame++
         this.state.run()
-        console.log(this.state.getFrame())
     }
 
     public menu(): void {

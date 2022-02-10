@@ -68,7 +68,6 @@ export default class Soldier extends Defender {
         //collision detection between invader and defender
         for(let i = 0; i < invaders.length; i++) {
             let invader = <Invader>invaders[i]
-            //console.log(invader instanceof Invader)
             if(Collision(invader, this)) {
                 this.currentSpeed = 0
                 this.health -= invader.damage

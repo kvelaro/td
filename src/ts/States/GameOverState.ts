@@ -4,15 +4,13 @@ import GameState from "./GameState";
 import DefendersMenu from "../Menu/DefendersMenu";
 
 export default class GameOverState extends GameState {
-    protected defendersMenu: DefendersMenu
     constructor(game: Game) {
         super(game)
-        this.defendersMenu = new DefendersMenu()
     }
 
     enter() {
         super.enter()
-        this.defendersMenu.delete()
+        DefendersMenu.delete()
         this.game.over()
     }
 
