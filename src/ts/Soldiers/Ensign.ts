@@ -4,8 +4,8 @@ import Cell from "../Cell";
 import soldierImage from '../../images/boy-with-stick.png'
 import EnsignBullet from "../Bullets/EnsignBullet";
 
-const IMAGE_WIDTH = 678
-const IMAGE_HEIGHT = 859
+const IMAGE_WIDTH = 267
+const IMAGE_HEIGHT = 382
 
 export default class Ensign extends Defender {
     public static title: string = 'Ensign'

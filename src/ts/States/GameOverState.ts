@@ -23,5 +23,6 @@ export default class GameOverState extends GameState {
     }
 
     public run(): void {
+        super.run()
     }
 }

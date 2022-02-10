@@ -21,5 +21,6 @@ export default class GameCompleteLevelState extends GameState {
     }
 
     public run(): void {
+        super.run()
     }
 }

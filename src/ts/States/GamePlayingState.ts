@@ -18,7 +18,7 @@ export default class GamePlayingState extends GameState {
     protected level: Level
     protected wasPaused: boolean
     protected defendersMenu: DefendersMenu
-    // protected currentDefenderSelected
+
     constructor(game: Game, level: Level) {
         super(game)
         this.level = level
@@ -35,6 +35,7 @@ export default class GamePlayingState extends GameState {
     }
 
     public run(): void {
+        super.run()
         this.game.playing(this.level)
     }
 

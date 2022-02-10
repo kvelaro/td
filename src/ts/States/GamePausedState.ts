@@ -17,5 +17,6 @@ export default class GamePausedState extends GameState {
     }
 
     public run(): void {
+        super.run()
     }
 }

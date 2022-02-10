@@ -5,9 +5,12 @@ export default abstract class GameState extends State {
 
     protected game: Game
     protected href: State
+    protected frame: number
+
     public constructor(game: Game) {
         super()
         this.game = game
+        this.frame = 0
     }
 
     public enter() {
@@ -15,5 +18,11 @@ export default abstract class GameState extends State {
         this.game.objects = []
     }
 
-    public abstract run(): void
+    public run(): void {
+        this.frame++
+    }
+
+    public getFrame(): number {
+        return this.frame
+    }
 }

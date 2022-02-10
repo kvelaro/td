@@ -21,6 +21,7 @@ export default class GameMenuState extends GameState {
     }
 
     run() {
+        super.run()
         this.game.menu()
     }
 }

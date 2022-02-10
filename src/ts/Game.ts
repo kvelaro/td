@@ -63,9 +63,9 @@ export default class Game {
     }
 
     public loop(): void {
-        console.log(this.frame)
         this.frame++
         this.state.run()
+        console.log(this.state.getFrame())
     }
 
     public menu(): void {
@@ -92,7 +92,6 @@ export default class Game {
         this.context().clearRect(0 ,0, this.width, this.height)
         this.zombies()
         let objects = this.objects
-        //console.log(objects)
         if(this.isAboutToComplete) {
             let filter = objects.filter(function (object: GameObject) {
                 return (object instanceof Invader)
@@ -204,10 +203,10 @@ export default class Game {
         let bigWaveAtFrame = Math.floor(5000 - (this.level.levelNo - 1) * 250)
         let randomZombieAtFrame = Math.floor(100 - (this.level.levelNo) * 10)
         if(!this.isAboutToComplete) {
-            if(this.frame % bigWaveAtFrame == 0) {
+            if(this.state.getFrame() % bigWaveAtFrame == 0) {
                 this.zombiesWave()
             }
-            if(this.frame % randomZombieAtFrame == 0) {
+            if(this.state.getFrame() % randomZombieAtFrame == 0) {
                 this.objects.push(this.zombie())
             }
         }
