@@ -56,7 +56,6 @@ export default abstract class Defender extends GameObject {
         //collision detection between invader and defender
         for(let i = 0; i < invaders.length; i++) {
             let invader = <Invader>invaders[i]
-            //console.log(invader instanceof Invader)
             if(Collision(invader, this)) {
                 this.health -= invader.damage
                 if(this.health <= 0) {
