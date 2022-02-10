@@ -61,6 +61,7 @@ export default abstract class Defender extends GameObject {
                 if(this.health <= 0) {
                     this.delete = true
                     let self = this
+                    //@todo ??
                     cells.forEach(function(cell) {
                         if(cell.x == self.x - 1 && cell.y == self.y - 1) {
                             cell.defenderExist = false

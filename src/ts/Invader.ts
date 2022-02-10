@@ -4,6 +4,7 @@ import Collision from "./Collision";
 import Game from "./Game";
 import Cell from "./Cell";
 import GameOverState from "./States/GameOverState";
+import Money from "./Money";
 
 export default abstract class Invader extends GameObject {
     protected game: Game
@@ -24,14 +25,18 @@ export default abstract class Invader extends GameObject {
 
     update(): void {
         let objects = this.game.objects
-        let cells:Array<Cell> = []
+        let cells: Array<Cell> = []
         let defenders: Array<Defender> = []
+        let moneyObject: Money = null
         objects.forEach(function(object) {
             if(object instanceof Defender) {
                 defenders.push(object)
             }
             if(object instanceof Cell) {
                 cells.push(object)
+            }
+            if(object instanceof Money) {
+                moneyObject = object
             }
         })
 
@@ -46,8 +51,9 @@ export default abstract class Invader extends GameObject {
                 this.health -= object.damage
                 if(this.health <= 0) {
                     this.delete = true
+                    moneyObject.addAmount(object.damage)
+                    //@todo ??
                     cells.forEach(function(cell) {
-
                         if(cell.y == object.y - 1) {
                             cell.defenderExist = false
                         }
