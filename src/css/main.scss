@@ -25,6 +25,7 @@ html, body {
   background: rgba(255, 255, 255, 0.3);
   padding: 10px 30px;
   border-radius: 50px;
+  z-index: 999;
 
   &__items {
     display: flex;

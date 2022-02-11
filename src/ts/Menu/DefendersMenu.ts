@@ -62,14 +62,33 @@ export default class DefendersMenu extends Menu {
             menuItems: this.defenders()
         })
 
-        menuSection.addEventListener('mouseover', function() {
+        let playing = false
+
+        menuSection.addEventListener('mouseenter', function() {
+            if(playing) {
+                return false
+            }
             menuSection.classList.remove('fade-out')
             menuSection.classList.add('fade-in')
         })
 
-        menuSection.addEventListener('mouseout', function(e) {console.log(e.currentTarget)
+        menuSection.addEventListener('mouseleave', function() {
+            if(playing) {
+                return false
+            }
             menuSection.classList.remove('fade-in')
             menuSection.classList.add('fade-out')
+        })
+
+        menuSection.addEventListener('animationstart', function () {
+            playing = true
+        })
+
+        menuSection.addEventListener('animationend', function () {
+            playing = false
+
+            // let menu = this.getClientRects()[0]
+            // console.log(menu.x)
         })
 
         body.prepend(menuSection)
