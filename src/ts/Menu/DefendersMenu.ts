@@ -11,11 +11,11 @@ export default class DefendersMenu extends Menu {
     protected gameState: GameState
     constructor(gameState: GameState) {
         super()
-        let href = this
+        let self = this
         this.activeDefenderClass = null
         this.gameState = gameState
         this.addEventListener('menu-selected', function(e: CustomEvent) {
-            href.setItemActive(e)
+            self.setItemActive(e)
         })
     }
 
@@ -51,7 +51,7 @@ export default class DefendersMenu extends Menu {
 
     draw() {
         super.draw()
-        let href = this
+        let self = this
         let defendersMenuTemplate = require("../../views/menu/defenders-menu.handlebars")
 
         let body = document.querySelector('body')
@@ -80,6 +80,22 @@ export default class DefendersMenu extends Menu {
             menuSection.classList.add('fade-out')
         })
 
+        menuSection.addEventListener('mouseover', function(e: MouseEvent) {
+            let el = <HTMLElement>e.currentTarget
+            if(el.classList.contains('fade-out') && playing == false) {
+                el.classList.remove('fade-out')
+                el.classList.add('fade-in')
+            }
+        })
+
+        menuSection.addEventListener('mouseout', function(e: MouseEvent) {
+            let el = <HTMLElement>e.currentTarget
+            if(el.classList.contains('fade-in') && playing == false) {
+                el.classList.remove('fade-in')
+                el.classList.add('fade-out')
+            }
+        })
+
         menuSection.addEventListener('animationstart', function () {
             playing = true
         })
@@ -92,7 +108,7 @@ export default class DefendersMenu extends Menu {
         let menuItems = document.querySelectorAll('.menu__items-item')
         for(let i = 0; i < menuItems.length; i++) {
             menuItems[i].addEventListener('click', function (e) {
-                href.dispatchEvent(new CustomEvent('menu-selected', {detail: e.currentTarget}))
+                self.dispatchEvent(new CustomEvent('menu-selected', {detail: e.currentTarget}))
             })
         }
     }
