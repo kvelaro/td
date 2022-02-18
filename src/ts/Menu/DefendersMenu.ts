@@ -86,9 +86,6 @@ export default class DefendersMenu extends Menu {
 
         menuSection.addEventListener('animationend', function () {
             playing = false
-
-            // let menu = this.getClientRects()[0]
-            // console.log(menu.x)
         })
 
         body.prepend(menuSection)

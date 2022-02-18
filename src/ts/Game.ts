@@ -39,6 +39,7 @@ export default class Game {
         this.objects = []
         this.frame = 0
         this.input = new InputHandler(this)
+        this.state = null
         this.playingStateAfterPause = null
     }
 
@@ -137,6 +138,9 @@ export default class Game {
     }
 
     public setState(state: GameState): void {
+        if(this.currentState() != null) {
+            this.currentState().leave()
+        }
         this.state = state
         this.state.enter()
     }
