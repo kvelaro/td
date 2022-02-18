@@ -27,6 +27,7 @@ export default class Game {
     public level: Level
     public isAboutToComplete: boolean
     public playingStateAfterPause: GamePlayingState
+    private waveTextInAction: number
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -41,6 +42,7 @@ export default class Game {
         this.input = new InputHandler(this)
         this.state = null
         this.playingStateAfterPause = null
+        this.waveTextInAction = 0
     }
 
     public canvas(): HTMLCanvasElement {
@@ -107,6 +109,13 @@ export default class Game {
             }
             objects[i].draw()
             objects[i].update()
+        }
+        console.log(this.state.getFrame())
+        if(this.waveTextInAction && this.waveTextInAction < 100) {
+            this.waveText(this.level.current())
+            if(++this.waveTextInAction == 100) {
+                this.waveTextInAction = 0
+            }
         }
     }
 
@@ -202,12 +211,22 @@ export default class Game {
         }
     }
 
+    protected waveText(wave: number): void {
+        this.context().save()
+        this.context().fillStyle = "#000"
+        this.context().font = "50px Arial"
+        this.context().textAlign = 'center'
+        this.context().fillText(`WAVE ${wave}`, this.width / 2, this.height / 2)
+        this.context().restore()
+    }
+
     private zombies(): void {
-        let bigWaveAtFrame = Math.floor(5000 - (this.level.levelNo - 1) * 250)
+        let bigWaveAtFrame = Math.floor(1000 - (this.level.levelNo - 1) * 250)
         let randomZombieAtFrame = Math.floor(100 - (this.level.levelNo) * 10)
         if(!this.isAboutToComplete) {
             if(this.state.getFrame() % bigWaveAtFrame == 0) {
                 this.zombiesWave()
+                this.waveTextInAction++
             }
             if(this.state.getFrame() % randomZombieAtFrame == 0) {
                 this.objects.push(this.zombie())
