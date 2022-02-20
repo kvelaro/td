@@ -1,9 +1,7 @@
 import Game from "../Game";
-//import GamePlayingState from "./GamePlayingState";
 import GameState from "./GameState";
-import {Levels} from "../Levels/Level1";
+import {GameLevels} from "../Levels/GameLevels";
 import GamePlayingState from "./GamePlayingState";
-//import Level1 from "../Levels/Level1";
 
 export default class GameOverState extends GameState {
     constructor(game: Game) {
@@ -25,7 +23,7 @@ export default class GameOverState extends GameState {
 
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Space' && event.type == 'keydown') {
-            this.game.setState(new GamePlayingState(this.game, new (<any>Levels)['Level1']()))
+            this.game.setState(new GamePlayingState(this.game, new (<any>GameLevels)['Level1']()))
         }
     }
 

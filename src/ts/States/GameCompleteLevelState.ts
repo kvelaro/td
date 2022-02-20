@@ -1,22 +1,27 @@
 import Game from "../Game";
 import GamePlayingState from "./GamePlayingState";
 import GameState from "./GameState";
+import {GameLevels} from "../Levels/GameLevels";
+import Level from "../Level";
 
 export default class GameCompleteLevelState extends GameState {
+    protected prevLevel: Level
     constructor(game: Game) {
         super(game)
     }
 
-    enter(prevState: GameState) {
+    enter(prevState: GamePlayingState) {
         super.enter(prevState)
+        this.prevLevel = prevState.level
         this.background()
     }
 
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Space' && event.type == 'keydown') {
-            let levelNo = this.game.level.levelNo
-            let className: any =  new (<any>window)[`Level${levelNo}`]()
-            this.game.setState(new GamePlayingState(this.game, className))
+            let levelNo = this.prevLevel.levelNo
+            let className: any = `Level${++levelNo}`
+            console.log(className)
+            this.game.setState(new GamePlayingState(this.game, new (<any>GameLevels)[className]()))
         }
     }
 

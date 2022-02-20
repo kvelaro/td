@@ -22,7 +22,7 @@ import SoldierZombie from "../Enemies/SoldierZombie";
 import VampireZombie from "../Enemies/VampireZombie";
 
 export default class GamePlayingState extends GameState implements EventListenerObject {
-    protected level: Level
+    public level: Level
     protected wasPaused: boolean
     protected defendersMenu: DefendersMenu
     protected isAboutToComplete: boolean
