@@ -62,7 +62,7 @@ export default abstract class Invader extends GameObject {
             }
         }
         this.x += this.currentSpeed * -1
-        if(this.x <= 1800) {
+        if(this.x <= -100) {
              this.game.setState(new GameOverState(this.game))
             //this.game.setState(new Game)
         }

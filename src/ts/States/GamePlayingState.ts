@@ -32,7 +32,7 @@ export default class GamePlayingState extends GameState implements EventListener
         this.level = level
         this.wasPaused = false
         this.defendersMenu = new DefendersMenu(this)
-        this.isAboutToComplete = true
+        this.isAboutToComplete = false
         this.waveTextInAction = 0
     }
 
@@ -176,7 +176,6 @@ export default class GamePlayingState extends GameState implements EventListener
         }
 
         if(this.game.currentState() === this) {
-            this.waveText(this.level.current())
             if(this.waveTextInAction && this.waveTextInAction < 100) {
                 this.waveText(this.level.current())
                 if(++this.waveTextInAction == 100) {
