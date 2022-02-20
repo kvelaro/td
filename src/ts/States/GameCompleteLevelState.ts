@@ -9,7 +9,7 @@ export default class GameCompleteLevelState extends GameState {
 
     enter(prevState: GameState) {
         super.enter(prevState)
-        this.game.win()
+        this.background()
     }
 
     handleInput(event: KeyboardEvent): void {
@@ -22,5 +22,21 @@ export default class GameCompleteLevelState extends GameState {
 
     public run(): void {
         super.run()
+
+        let objects = this.objects
+        for (let i = 0; i < objects.length; i++) {
+            objects[i].draw()
+        }
+
+        let lineHeight = 50
+        let textLines = ['YOU WIN', 'PRESS SPACE TO ENTER NEXT LEVEL']
+        this.game.context().save()
+        this.game.context().fillStyle = "#000"
+        this.game.context().font = "50px Arial"
+        this.game.context().textAlign = 'center'
+        for(let i = 0; i < textLines.length; i++) {
+            this.game.context().fillText(textLines[i], this.game.w() / 2, this.game.h() / 2 + (i * lineHeight))
+        }
+        this.game.context().restore()
     }
 }

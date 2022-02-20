@@ -58,15 +58,6 @@ export default class Game {
         this.state.run()
     }
 
-    public win(): void {
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('YOU WIN', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
-
     public setState(state: GameState): void {
         let prevState = null
         if(this.currentState() != null) {

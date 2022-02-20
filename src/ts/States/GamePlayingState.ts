@@ -32,7 +32,7 @@ export default class GamePlayingState extends GameState implements EventListener
         this.level = level
         this.wasPaused = false
         this.defendersMenu = new DefendersMenu(this)
-        this.isAboutToComplete = false
+        this.isAboutToComplete = true
         this.waveTextInAction = 0
     }
 
@@ -161,7 +161,7 @@ export default class GamePlayingState extends GameState implements EventListener
             let filter = objects.filter(function (object: GameObject) {
                 return (object instanceof Invader)
             })
-            if(!filter) {
+            if(filter.length == 0) {
                 this.game.setState(new GameCompleteLevelState(this.game))
             }
         }
