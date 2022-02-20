@@ -42,7 +42,7 @@ export default class VampireZombie extends Invader {
 
     update() {
         super.update()
-        let objects = this.game.objects
+        let objects = this.game.currentState().gameObjects
         let defenders: Array<Defender> = []
         let cells: Array<Cell> = []
         objects.forEach(function(object) {

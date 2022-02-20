@@ -61,7 +61,7 @@ export default class Soldier extends Defender {
         if(this.shooting) {
             this.x += this.currentSpeed
         }
-        let objects = this.game.objects
+        let objects = this.game.currentState().gameObjects
         let invaders = objects.filter(function(object) {
             return object instanceof Invader
         })

@@ -1,16 +1,7 @@
-import Cell from "./Cell";
 import InputHandler from "./InputHandler";
-import GameObject from "./GameObject";
-import Money from "./Money";
-import SimpleZombie from "./Enemies/SimpleZombie";
-import SoldierZombie from "./Enemies/SoldierZombie";
-import VampireZombie from "./Enemies/VampireZombie";
-import Invader from "./Invader";
 import Level from "./Level";
-import Wave from "./interfaces/Wave";
 import GameState from "./States/GameState";
 import GameMenuState from "./States/GameMenuState";
-import GameCompleteLevelState from "./States/GameCompleteLevelState";
 import GamePlayingState from "./States/GamePlayingState";
 
 export default class Game {
@@ -18,16 +9,15 @@ export default class Game {
     private ctx: CanvasRenderingContext2D
     private width: number
     private height: number
-    public objects: Array<GameObject>
     private frame: number
-    private rows: number
-    private cols: number
+    public rows: number
+    public cols: number
     private state: GameState
     protected input: InputHandler
     public level: Level
-    public isAboutToComplete: boolean
+
     public playingStateAfterPause: GamePlayingState
-    private waveTextInAction: number
+
     constructor(gameScreen: HTMLCanvasElement, width: number, height: number) {
         this.gameCanvasElement = gameScreen
         this.ctx = gameScreen.getContext('2d')
@@ -37,12 +27,10 @@ export default class Game {
         this.ctx.canvas.width  = this.width
         this.ctx.canvas.height = this.height
 
-        this.objects = []
         this.frame = 0
         this.input = new InputHandler(this)
         this.state = null
         this.playingStateAfterPause = null
-        this.waveTextInAction = 0
     }
 
     public canvas(): HTMLCanvasElement {
@@ -70,75 +58,12 @@ export default class Game {
         this.state.run()
     }
 
-    public menu(): void {
-        let objects = this.objects
-        for (let i = 0; i < objects.length; i++) {
-            if(objects[i] && objects[i].delete) {
-                objects.splice(i, 1)
-                continue
-            }
-            objects[i].draw()
-            objects[i].update()
-        }
-
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('PRESS SPACE TO START GAME', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
-
-    public playing(level: Level): void {
-        this.level = level
-        this.context().clearRect(0 ,0, this.width, this.height)
-        this.zombies()
-        let objects = this.objects
-        if(this.isAboutToComplete) {
-            let filter = objects.filter(function (object: GameObject) {
-                return (object instanceof Invader)
-            })
-            if(!filter) {
-                this.setState(new GameCompleteLevelState(this))
-            }
-        }
-
-        for (let i = 0; i < objects.length; i++) {
-            if(objects[i] && objects[i].delete) {
-                objects.splice(i, 1)
-                continue
-            }
-            objects[i].draw()
-            objects[i].update()
-        }
-
-        //@todo
-        if(this.state instanceof GamePlayingState) {
-            this.waveText(this.level.current())
-            if(this.waveTextInAction && this.waveTextInAction < 100) {
-                this.waveText(this.level.current())
-                if(++this.waveTextInAction == 100) {
-                    this.waveTextInAction = 0
-                }
-            }
-        }
-    }
-
     public paused(): void {
         this.context().save()
         this.context().fillStyle = "#000"
         this.context().font = "50px Arial"
         this.context().textAlign = 'center'
         this.context().fillText('PAUSED', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
-
-    public over(): void {
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('GAME OVER', this.width / 2, this.height / 2)
         this.context().restore()
     }
 
@@ -152,90 +77,20 @@ export default class Game {
     }
 
     public setState(state: GameState): void {
+        let prevState = null
         if(this.currentState() != null) {
+            prevState = this.currentState()
             this.currentState().leave()
         }
         this.state = state
-        this.state.enter()
+        this.state.enter(prevState)
     }
 
     public currentState(): GameState {
         return this.state
     }
 
-    public background(): void {
-        let cellWidth = Cell.width
-        let cellHeight = Cell.height
-
-        this.rows = Math.floor(this.h() / cellHeight)
-        this.cols = Math.floor(this.w() / cellWidth)
-        for (let i = 0; i <= this.rows; i++ ) {
-            for (let j = 0; j <= this.cols; j++ ) {
-                this.objects.push(new Cell(this, i, j))
-            }
-        }
-        this.objects.push(new Money(this, this.width - 200, 20))
-    }
-
     public currentFrame() {
         return this.frame
-    }
-
-    public zombie(rand = false): Invader {
-        let zombieRandom = Math.floor(Math.random() * 3)
-        let zombie = null
-        let yPos = Math.floor(Math.random() * this.rows) * Cell.height
-        let random = 1
-        if(rand) {
-            random = Math.floor(Math.random() * 1000)
-        }
-        switch (zombieRandom) {
-            case 0:
-                zombie = new SimpleZombie(this, this.width + random, yPos + 1)
-                break
-            case 1:
-                zombie = new SoldierZombie(this, this.width + random, yPos + 1)
-                break
-            case 2:
-                zombie = new VampireZombie(this, this.width + random, yPos + 1)
-                break
-        }
-        return zombie
-    }
-
-    public zombiesWave(): void {
-        let wavesExist = this.level.wavesExist()
-        if(!wavesExist) {
-            this.isAboutToComplete = true
-        }
-        else {
-            let waveObj = <Wave>this.level.next()
-            for(let i = 0; i < waveObj.zombieCount; i++) {
-                this.objects.push(this.zombie())
-            }
-        }
-    }
-
-    protected waveText(wave: number): void {
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText(`WAVE ${wave}`, this.width / 2, this.height / 2)
-        this.context().restore()
-    }
-
-    private zombies(): void {
-        let bigWaveAtFrame = Math.floor(3000 - (this.level.levelNo - 1) * 250)
-        let randomZombieAtFrame = Math.floor(100 - (this.level.levelNo) * 10)
-        if(!this.isAboutToComplete) {
-            if(this.state.getFrame() % bigWaveAtFrame == 0) {
-                this.zombiesWave()
-                this.waveTextInAction++
-            }
-            if(this.state.getFrame() % randomZombieAtFrame == 0) {
-                this.objects.push(this.zombie())
-            }
-        }
     }
 }

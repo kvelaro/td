@@ -6,7 +6,8 @@ export default class GamePausedState extends GameState {
        super(game)
     }
 
-    enter() {
+    enter(prevState: GameState) {
+        console.log(prevState)
         this.game.paused()
     }
 

@@ -20,13 +20,13 @@ export default abstract class Bullet extends GameObject {
         }
 
         let moneyObject = null
-        let filter = this.game.objects.filter(object => {return object instanceof Money})
+        let filter = this.game.currentState().gameObjects.filter(object => {return object instanceof Money})
         if(filter) {
             moneyObject = <Money>filter.pop()
         }
 
-        for(let i = 0; i < this.game.objects.length; i++) {
-            let obj = this.game.objects[i]
+        for(let i = 0; i < this.game.currentState().gameObjects.length; i++) {
+            let obj = this.game.currentState().gameObjects[i]
             if(obj instanceof Invader && Collision(this, obj))  {
                 obj.health -= this.damage
                 moneyObject.addAmount(this.damage * 2)

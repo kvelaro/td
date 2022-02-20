@@ -24,7 +24,7 @@ export default abstract class Invader extends GameObject {
     }
 
     update(): void {
-        let objects = this.game.objects
+        let objects = this.game.currentState().gameObjects
         let cells: Array<Cell> = []
         let defenders: Array<Defender> = []
         let moneyObject: Money = null

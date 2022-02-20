@@ -1,6 +1,7 @@
+
 export default abstract class State {
 
-    public enter() {}
+    public abstract enter(prevState: State): void
 
     abstract handleInput(event: Event): void
 

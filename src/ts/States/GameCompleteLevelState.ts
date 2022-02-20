@@ -7,8 +7,8 @@ export default class GameCompleteLevelState extends GameState {
         super(game)
     }
 
-    enter() {
-        super.enter()
+    enter(prevState: GameState) {
+        super.enter(prevState)
         this.game.win()
     }
 

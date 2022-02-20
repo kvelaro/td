@@ -8,20 +8,34 @@ export default class GameMenuState extends GameState {
         super(game)
     }
 
-    enter() {
-        super.enter()
-        this.game.background()
+    enter(prevState: GameState) {
+        super.enter(prevState)
+        this.background()
     }
 
     handleInput(event: KeyboardEvent): void {
         if(event.code == 'Space' && event.type == 'keydown') {
-            this.game.isAboutToComplete = false
             this.game.setState(new GamePlayingState(this.game, new Level1()))
         }
     }
 
     run() {
         super.run()
-        this.game.menu()
+        let objects = this.objects
+        for (let i = 0; i < objects.length; i++) {
+            if(objects[i] && objects[i].delete) {
+                objects.splice(i, 1)
+                continue
+            }
+            objects[i].draw()
+            objects[i].update()
+        }
+
+        this.game.context().save()
+        this.game.context().fillStyle = "#000"
+        this.game.context().font = "50px Arial"
+        this.game.context().textAlign = 'center'
+        this.game.context().fillText('PRESS SPACE TO START GAME', this.game.w() / 2, this.game.h() / 2)
+        this.game.context().restore()
     }
 }

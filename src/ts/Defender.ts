@@ -33,7 +33,7 @@ export default abstract class Defender extends GameObject {
         super.draw()
         this.shooting = false
         let self = this
-        this.game.objects.forEach(function (object) {
+        this.game.currentState().gameObjects.forEach(function (object) {
             if(object instanceof Invader && self.y == object.y) {
                 self.shooting = true
             }
@@ -41,7 +41,7 @@ export default abstract class Defender extends GameObject {
     }
 
     update() {
-        let objects = this.game.objects
+        let objects = this.game.currentState().gameObjects
         let invaders:Array<Invader> = []
         let cells:Array<Cell> = []
         objects.forEach(function(object) {

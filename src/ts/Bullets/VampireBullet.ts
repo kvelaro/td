@@ -24,7 +24,7 @@ export default class VampireBullet extends Bullet {
         if(this.x < 0) {
             this.delete = true
         }
-        let objects = this.game.objects
+        let objects = this.game.currentState().gameObjects
         let cells:Array<Cell> = []
         let defenders: Array<Defender> = []
         objects.forEach(function(object) {
