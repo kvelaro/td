@@ -102,6 +102,7 @@ export default class Game {
                 this.setState(new GameCompleteLevelState(this))
             }
         }
+
         for (let i = 0; i < objects.length; i++) {
             if(objects[i] && objects[i].delete) {
                 objects.splice(i, 1)
@@ -110,11 +111,15 @@ export default class Game {
             objects[i].draw()
             objects[i].update()
         }
-        console.log(this.state.getFrame())
-        if(this.waveTextInAction && this.waveTextInAction < 100) {
+
+        //@todo
+        if(this.state instanceof GamePlayingState) {
             this.waveText(this.level.current())
-            if(++this.waveTextInAction == 100) {
-                this.waveTextInAction = 0
+            if(this.waveTextInAction && this.waveTextInAction < 100) {
+                this.waveText(this.level.current())
+                if(++this.waveTextInAction == 100) {
+                    this.waveTextInAction = 0
+                }
             }
         }
     }
@@ -221,7 +226,7 @@ export default class Game {
     }
 
     private zombies(): void {
-        let bigWaveAtFrame = Math.floor(1000 - (this.level.levelNo - 1) * 250)
+        let bigWaveAtFrame = Math.floor(3000 - (this.level.levelNo - 1) * 250)
         let randomZombieAtFrame = Math.floor(100 - (this.level.levelNo) * 10)
         if(!this.isAboutToComplete) {
             if(this.state.getFrame() % bigWaveAtFrame == 0) {

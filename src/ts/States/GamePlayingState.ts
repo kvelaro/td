@@ -62,6 +62,7 @@ export default class GamePlayingState extends GameState implements EventListener
 
     leave() {
         super.leave()
+        this.defendersMenu.delete()
         this.removeListeners()
     }
 

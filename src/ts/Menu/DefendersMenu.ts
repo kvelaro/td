@@ -132,7 +132,7 @@ export default class DefendersMenu extends Menu {
         return this.activeDefenderClass
     }
 
-    public static delete() {
+    public delete() {
         let menuEl = document.querySelector('section.menu')
         menuEl.parentElement.removeChild(menuEl)
     }

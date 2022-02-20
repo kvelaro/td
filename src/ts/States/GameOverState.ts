@@ -1,17 +1,23 @@
 import Game from "../Game";
 import GamePlayingState from "./GamePlayingState";
 import GameState from "./GameState";
-import DefendersMenu from "../Menu/DefendersMenu";
 
 export default class GameOverState extends GameState {
     constructor(game: Game) {
         super(game)
     }
 
-    enter() {
-        super.enter()
-        DefendersMenu.delete()
+    enter() {console.log(222)
+        this.draw()
         this.game.over()
+    }
+
+    draw() {
+        this.game.context().clearRect(0 ,0, this.game.w(), this.game.h())
+        let objects = this.game.objects
+        for (let i = 0; i < objects.length; i++) {
+           objects[i].draw()
+        }
     }
 
     handleInput(event: KeyboardEvent): void {
