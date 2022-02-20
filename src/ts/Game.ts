@@ -58,15 +58,6 @@ export default class Game {
         this.state.run()
     }
 
-    public paused(): void {
-        this.context().save()
-        this.context().fillStyle = "#000"
-        this.context().font = "50px Arial"
-        this.context().textAlign = 'center'
-        this.context().fillText('PAUSED', this.width / 2, this.height / 2)
-        this.context().restore()
-    }
-
     public win(): void {
         this.context().save()
         this.context().fillStyle = "#000"

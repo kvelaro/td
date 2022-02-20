@@ -117,8 +117,8 @@ export default class GamePlayingState extends GameState implements EventListener
         if (!this.wasPaused) {
             super.enter(prevState)
             this.background()
-            this.defendersMenu.draw()
         }
+        this.defendersMenu.draw()
         this.addListeners()
     }
 
@@ -175,7 +175,7 @@ export default class GamePlayingState extends GameState implements EventListener
             objects[i].update()
         }
 
-        if(this.game.currentState() == this) {
+        if(this.game.currentState() === this) {
             this.waveText(this.level.current())
             if(this.waveTextInAction && this.waveTextInAction < 100) {
                 this.waveText(this.level.current())
